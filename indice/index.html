@@ -123,7 +123,7 @@ function filter(){
  let shown=0;
  for(const a of cards){const category=activeFilter==='important'?a.dataset.section==='0':activeFilter==='utilities'?a.dataset.section==='1':!activeFilter||a.dataset.type===activeFilter;a.hidden=!available.includes(a)||!category||!terms.every(t=>normalize(a.dataset.search).includes(t));if(!a.hidden)shown++}
  document.querySelectorAll('.group').forEach(g=>g.hidden=![...g.querySelectorAll('.card')].some(a=>!a.hidden));
- document.querySelectorAll('.section').forEach(s=>s.hidden=false);
+ document.querySelectorAll('.section').forEach(s=>s.hidden=![...s.querySelectorAll('.card')].some(a=>!a.hidden));
  document.querySelectorAll('.section').forEach(s=>s.querySelector('.section-count').textContent=countLabel([...s.querySelectorAll('.card')].filter(a=>!a.hidden).length,'atalho','atalhos'));
  $('empty').hidden=shown>0;$('clear').hidden=!$('search').value;
  const types=['markdown','link','app'].map(t=>available.filter(a=>a.dataset.type===t).length);
