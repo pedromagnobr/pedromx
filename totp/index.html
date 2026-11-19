@@ -2,592 +2,441 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark">
-<title>Calculadora TOTP</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23000%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27none%27 stroke=%27%23b7a7ff%27 stroke-width=%275%27/%3E%3Cpath d=%27M32 18v15l10 7%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%275%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<title>Calculadora TOTP</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23000%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2722%27 fill=%27none%27 stroke=%27%23DC582A%27 stroke-width=%275%27/%3E%3Cpath d=%27M32 18v15l10 7%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%275%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
 <style>
 :root{color-scheme:dark;font-family:'Segoe UI Variable','Segoe UI',system-ui,sans-serif;background:#000;color:#f3f3f5;--muted:#a3a3ad;--line:#28282e;--accent:#9b8cff}*{box-sizing:border-box}body{margin:0;background:#000}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}.shell{max-width:1000px;margin:auto;padding:0 40px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:30px 0;border-bottom:1px solid var(--line)}h1{font-size:20px;margin:0;font-weight:600;letter-spacing:.02em}.header-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}button,.file-button{min-height:44px;border:1px solid var(--line);background:#000;color:#ddd;border-radius:10px;padding:10px 16px}button:hover,.file-button:hover{border-color:#777}button:focus-visible,input:focus-visible,.file-button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.primary{background:#f3f3f5;color:#08080a;border-color:#f3f3f5;font-weight:600}.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:30px 0 22px}.intro p{color:var(--muted);margin:0;font-size:14px}.clock{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:8px 0 40px}.card{border:1px solid var(--line);cursor:grab;border-radius:14px;padding:17px;background:#000;min-height:152px;display:flex;flex-direction:column;justify-content:space-between;gap:16px}.card-top{display:flex;gap:12px;align-items:center}.icon{width:38px;height:38px;flex:none;border:1px solid #28282e;border-radius:10px;display:grid;place-items:center;color:#bbb;font-size:20px}.account{min-width:0}.account strong{display:block;font-size:14px;font-weight:600;overflow-wrap:anywhere}.account small{color:var(--muted);font-size:12px}.code-row{display:flex;align-items:center;justify-content:space-between;gap:8px}.code{font-size:clamp(25px,3vw,32px);font-weight:600;letter-spacing:.08em;font-variant-numeric:tabular-nums}.copy{min-height:38px;padding:7px 12px;font-size:12px}.note{font-size:12px;color:var(--muted);line-height:1.45;overflow-wrap:anywhere;white-space:pre-wrap;min-height:17px}#noteText{white-space:pre-wrap}.progress{height:2px;background:#222;border-radius:2px;overflow:hidden}.progress span{display:block;height:100%;background:#aaa;transition:width .2s linear}.empty{border:1px dashed #28282e;border-radius:14px;padding:36px 20px;text-align:center;color:var(--muted);grid-column:1/-1}.message{min-height:20px;color:var(--muted);font-size:13px;padding-bottom:16px}.file-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}footer{border-top:1px solid var(--line);padding:16px 0 30px;color:#777;font-size:12px;line-height:1.6}footer strong{color:#aaa;font-weight:500}@media(max-width:760px){.shell{padding:0 20px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:14px;min-height:146px}.intro{align-items:flex-start;flex-direction:column}.clock{text-align:left}}@media(max-width:480px){.shell{padding:0 14px}header{padding:20px 0;align-items:flex-start}.header-actions{gap:7px}button,.file-button{padding:9px 11px;font-size:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card{padding:12px;min-height:146px;gap:12px}.icon{width:32px;height:32px}.code{font-size:23px;letter-spacing:.04em}.copy{padding:6px 8px}.account strong{font-size:13px}.account small{font-size:11px}}
-dialog{width:min(440px,calc(100% - 28px));border:1px solid var(--line);border-radius:14px;background:#08080a;color:#f3f3f5;padding:22px}dialog{opacity:1;background-color:#08080a}dialog::backdrop{background:#000;backdrop-filter:none;opacity:1}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.close{min-height:34px;width:36px;padding:4px;font-size:20px}dialog p{color:#c0c0c8;font-size:14px;line-height:1.55}dialog label{display:block;font-size:13px;color:#c0c0c8;margin:16px 0 7px}dialog input{width:100%;min-height:44px;background:#000;border:1px solid var(--line);border-radius:9px;padding:10px;color:#fff}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.current-code{font-size:clamp(34px,4vw,46px);letter-spacing:.04em;color:#f5f5f7;font-variant-numeric:tabular-nums}.next-line{display:flex;align-items:center;gap:8px;color:#bcbcc4;font-size:13px}.next-code{font-size:18px;letter-spacing:.06em;color:#c4c4cc}.card-buttons{display:flex;flex-wrap:nowrap;gap:5px}.card-buttons button{flex:1;min-width:0;min-height:36px;padding:6px 7px;font-size:12px;white-space:nowrap}#noteText{white-space:pre-wrap}.card-buttons button{font-size:10px;padding-left:3px;padding-right:3px}#lockError{color:#ff8a8a;font-size:13px;min-height:18px;margin-top:8px}#lockBtn:disabled{opacity:.65;cursor:default}.locked-state{border:1px dashed #28282e;border-radius:14px;padding:36px 20px;text-align:center;color:var(--muted);grid-column:1/-1}.brand{display:flex;align-items:center;gap:10px;min-width:max-content}.brand-icon{width:32px;height:32px;color:#b7a7ff;flex:none}.header-controls{display:flex;flex-direction:column;gap:7px;flex:1;max-width:720px}.action-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.action-row button{min-height:42px;padding:7px 8px;font-size:12px;line-height:1.15;white-space:normal}.action-row button:disabled{opacity:.65;cursor:default}@media(max-width:760px){header{flex-direction:column;align-items:stretch}.header-controls{width:100%;max-width:none}.action-row{gap:6px}.action-row button{font-size:11px;padding:6px 4px}}@media(max-width:420px){.action-row{gap:4px}.action-row button{font-size:10px;padding:5px 2px}}.card-buttons button:disabled{opacity:.45;cursor:not-allowed}.header-controls{position:relative;z-index:2}header{position:relative;z-index:2}#lockDialog.modeless{position:fixed;top:135px;left:50%;transform:translateX(-50%);margin:0;z-index:1}#lockPin{text-align:center;letter-spacing:.35em;font-size:20px}#lockTitle{font-size:18px}#lockDialog .pin-count,.locked-state .pin-count{display:block;text-align:center;color:#a3a3ad;font-size:12px;margin-top:5px}.locked-state{display:flex;flex-direction:column;align-items:center;gap:10px}.locked-state .lock-mark{font-size:28px}.locked-state form{width:min(260px,100%);display:flex;flex-direction:column;gap:8px}.locked-state input{width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;background:#000;color:#fff;text-align:center;letter-spacing:.35em;font-size:20px;padding:10px}</style>
+dialog{width:min(440px,calc(100% - 28px));border:1px solid var(--line);border-radius:14px;background:#08080a;color:#f3f3f5;padding:22px}dialog{opacity:1;background-color:#08080a}dialog::backdrop{background:#000;backdrop-filter:none;opacity:1}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.close{min-height:34px;width:36px;padding:4px;font-size:20px}dialog p{color:#c0c0c8;font-size:14px;line-height:1.55}dialog label{display:block;font-size:13px;color:#c0c0c8;margin:16px 0 7px}dialog input{width:100%;min-height:44px;background:#000;border:1px solid var(--line);border-radius:9px;padding:10px;color:#fff}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.current-code{font-size:clamp(34px,4vw,46px);letter-spacing:.04em;color:#f5f5f7;font-variant-numeric:tabular-nums}.next-line{display:flex;align-items:center;gap:8px;color:#bcbcc4;font-size:13px}.next-code{font-size:18px;letter-spacing:.06em;color:#c4c4cc}.card-buttons{display:flex;flex-wrap:nowrap;gap:5px}.card-buttons button{flex:1;min-width:0;min-height:36px;padding:6px 7px;font-size:12px;white-space:nowrap}#noteText{white-space:pre-wrap}.card-buttons button{font-size:10px;padding-left:3px;padding-right:3px}#lockError{color:#ff8a8a;font-size:13px;min-height:18px;margin-top:8px}#lockBtn:disabled{opacity:.65;cursor:default}.locked-state{border:1px dashed #28282e;border-radius:14px;padding:36px 20px;text-align:center;color:var(--muted);grid-column:1/-1}.brand{display:flex;align-items:center;gap:10px;min-width:max-content}.brand-icon{width:32px;height:32px;color:#b7a7ff;flex:none}.header-controls{display:flex;flex-direction:column;gap:7px;flex:1;max-width:720px}.action-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.action-row button{min-height:42px;padding:7px 8px;font-size:12px;line-height:1.15;white-space:normal}.action-row button:disabled{opacity:.65;cursor:default}@media(max-width:760px){header{flex-direction:column;align-items:stretch}.header-controls{width:100%;max-width:none}.action-row{gap:6px}.action-row button{font-size:11px;padding:6px 4px}}@media(max-width:420px){.action-row{gap:4px}.action-row button{font-size:10px;padding:5px 2px}}.card-buttons button:disabled{opacity:.45;cursor:not-allowed}.header-controls{position:relative;z-index:2}header{position:relative;z-index:2}#lockDialog.modeless{position:fixed;top:135px;left:50%;transform:translateX(-50%);margin:0;z-index:1}#lockPin{text-align:center;letter-spacing:.35em;font-size:20px}#lockTitle{font-size:18px}#lockDialog .pin-count,.locked-state .pin-count{display:block;text-align:center;color:#a3a3ad;font-size:12px;margin-top:5px}.locked-state{display:flex;flex-direction:column;align-items:center;gap:10px}.locked-state .lock-mark{font-size:28px}.locked-state form{width:min(260px,100%);display:flex;flex-direction:column;gap:8px}.locked-state input{width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;background:#000;color:#fff;text-align:center;letter-spacing:.35em;font-size:20px;padding:10px}
+:root{--accent:#DC582A;--bg:#000000;--ink:#FFFFFF;--muted:#D5D5D5;--line:#3b3b43;--accent-ink:#FFFFFF;background:var(--bg);color:var(--ink);accent-color:var(--accent)}
+[hidden]{display:none!important}body,button,.file-button,.card,dialog,dialog input,.locked-state input{background:var(--bg);color:var(--ink)}a{color:inherit;text-decoration:none}button,input{font:inherit}button:disabled{opacity:.5;cursor:not-allowed}button:hover,a.index-link:hover{border-color:var(--accent)}button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}::selection{background:#fff;color:#000}*{-webkit-tap-highlight-color:#ffffff22}
+.shell{max-width:1240px;padding:0 40px}header{display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:16px;align-items:center;z-index:auto}.brand{min-width:0;gap:8px}.brand h1{font-size:clamp(12px,2vw,20px);overflow-wrap:anywhere}.brand-icon{color:var(--accent);width:28px;height:28px}.pmx-credit{display:grid;place-items:center;width:48px;height:48px}.pmx-credit img{width:42px;height:42px;object-fit:contain}.pmx-credit:hover{border:0;outline:none}.index-link{justify-self:end;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:10px;text-align:center;max-width:100%}
+.header-controls{max-width:none;width:100%;padding:24px 0 8px;gap:10px;z-index:auto}.action-row{display:flex;gap:8px;flex-wrap:wrap}.action-row button{flex:1 1 140px;min-height:44px;font-size:14px;padding:10px 14px}.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.intro{padding:32px 0 24px;align-items:center}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:600}.intro h2{font-size:clamp(28px,5vw,44px);letter-spacing:-1px;font-weight:600;margin:12px 0}.intro p{font-size:16px}.clock{font-size:clamp(26px,4vw,38px);font-weight:300;letter-spacing:-1px;color:var(--ink)}
+.grid{gap:14px}.card{min-width:0;padding:20px;border-radius:14px;gap:18px}.icon{color:var(--accent);border-color:var(--line)}.account strong{font-size:16px}.account small{font-size:14px;overflow-wrap:anywhere}.current-code{font-size:clamp(26px,3.5vw,40px);color:var(--ink);white-space:nowrap}.next-line,.next-code,dialog p,dialog label{color:var(--muted)}.next-line{flex-wrap:wrap}.card-buttons{flex-wrap:wrap;gap:6px}.card-buttons button{flex:1 1 70px;font-size:13px;padding:8px;min-height:44px}.progress span{background:var(--accent)}.empty,.locked-state{padding:40px 24px;line-height:1.6}dialog{width:min(520px,calc(100% - 32px));max-height:90dvh;overflow:auto;border-radius:18px;padding:26px}dialog::backdrop{background:#000b;opacity:1}dialog h2{font-size:24px;margin-top:0}dialog label,dialog p{font-size:14px;line-height:1.6}dialog input{font-size:16px}dialog .check-label{display:flex;align-items:center;gap:10px}.check-label input{width:20px;min-height:20px;height:20px}.dialog-actions{flex-wrap:wrap}#message{font-size:14px;color:var(--ink)}footer{color:var(--muted);font-size:13px}footer strong{color:var(--ink)}.credit{text-align:center;margin-top:22px}.credit a{color:var(--accent)}
+@media(max-width:760px){.shell{padding:0 22px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro{align-items:flex-start}.card{padding:16px}.action-row button{flex-basis:120px}}
+@media(max-width:480px){.shell{padding:0 16px}header{gap:6px;grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr)}.brand-icon{width:20px;height:20px}.brand{gap:5px}.pmx-credit,.pmx-credit img{width:32px;height:32px}.index-link{font-size:12px;padding:8px}.grid{grid-template-columns:1fr}.action-row button{flex-basis:40%;font-size:13px}.current-code{font-size:38px}.intro{gap:18px}.header-controls{padding-top:18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+#lockDialog input[type=password],#removePinInput,#inlinePin{height:52px;min-height:52px;width:100%;padding:12px 16px;text-align:center;font-family:inherit;font-size:22px;line-height:1.2;letter-spacing:.3em;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}#lockDialog .pin-count{display:block;text-align:center;font-size:12px;margin-top:6px;color:var(--muted)}#lockDialog label{margin-top:18px}dialog select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font:inherit;padding:10px}dialog select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.footer-links{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:20px}.footer-links a,.footer-links button{font:inherit;color:var(--ink);padding:10px 0;background:none;border:0;text-align:left}.footer-links button{text-align:right}.footer-links a:hover,.footer-links button:hover{color:var(--accent)}@media(max-width:480px){.footer-links{align-items:flex-start}.footer-links>*{max-width:48%}}
+#lockDialog.pin-dialog{width:min(460px,calc(100% - 28px));padding:clamp(20px,4vw,28px)}#lockDialog .dialog-head{margin-bottom:12px}#lockDialog #lockTitle{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--ink)}#lockDialog #lockHint{margin:0 0 18px;line-height:1.6}#lockDialog .pin-field{margin:16px 0 0}#lockDialog .pin-field label{display:block;margin:0 0 8px;font-size:13px;font-weight:600;color:var(--ink)}#lockDialog input.pin-entry[type=password],#removePinDialog input.pin-entry[type=password]{display:block;width:100%;min-width:0;height:54px;min-height:54px;margin:0;padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:500 23px/1.2 'Segoe UI Variable','Segoe UI',system-ui,sans-serif;letter-spacing:.28em;text-align:center;box-shadow:none;appearance:none;-webkit-appearance:none}#lockDialog .pin-entry::placeholder,#removePinDialog .pin-entry::placeholder{color:var(--muted);opacity:.55;letter-spacing:.18em}#lockDialog .pin-entry:focus-visible,#removePinDialog .pin-entry:focus-visible{outline:2px solid var(--accent);outline-offset:2px}#lockDialog .pin-count{display:block;margin:6px 1px 0;text-align:right;font-size:12px;line-height:1.4;color:var(--muted)}#lockDialog #lockError{margin-top:10px;min-height:18px}#lockDialog .dialog-actions{margin-top:18px}#lockDialog .dialog-actions .primary{min-width:150px}@media(max-width:480px){#lockDialog.pin-dialog{padding:20px}#lockDialog .pin-entry{font-size:22px}}
+</style>
 </head>
 <body><main class="shell">
-<header><div class="brand"><svg class="brand-icon" viewBox="0 0 48 48" role="img" aria-label="Relógio TOTP"><circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 12v13l9 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><h1>Calculadora TOTP</h1></div><div class="header-controls"><div class="action-row"><button id="lockBtn" type="button">Senha</button><button id="offsetBtn" type="button">Ajustar atraso</button><button id="exportConfigBtn" class="primary" type="button">Exportar configuração</button><button id="lockNowBtn" type="button" disabled>Trancar</button></div><div class="action-row"><button id="exportBackupBtn" type="button">Exportar backup</button><button id="importBtn" type="button">Importar backup</button><button id="importConfigBtn" type="button">Importar configuração</button><button id="clearBtn" type="button">Limpar</button><input id="file" class="file-input" type="file" accept="application/json,.json"><input id="configFile" class="file-input" type="file" accept="application/json,.json"></div></div></header>
-<div class="intro"><p>Senhas de uso único baseado no tempo</p><div class="clock" id="clock">--:--:--</div></div>
-<div id="grid" class="grid"></div><dialog id="lockDialog"><form id="lockForm"><div class="dialog-head"><strong id="lockTitle">🔒 Códigos bloqueados</strong><button type="button" id="lockCloseBtn" class="close" aria-label="Fechar">×</button></div><p id="lockHint">Digite seu PIN para abrir seus códigos.</p><label id="lockPinLabel" for="lockPin">PIN de 4 a 6 dígitos</label><input id="lockPin" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••" autocomplete="current-password" required><small class="pin-count" id="lockPinCount">0/6 dígitos</small><div id="newPinWrap" hidden><label for="lockPinNew">Novo PIN</label><input id="lockPinNew" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" autocomplete="new-password"><small class="pin-count" id="lockPinNewCount">0/6 dígitos</small></div><div id="confirmWrap" hidden><label for="lockPinConfirm">Confirme o novo PIN</label><input id="lockPinConfirm" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" autocomplete="new-password"><small class="pin-count" id="lockPinConfirmCount">0/6 dígitos</small></div><div id="lockError" role="status"></div><div class="dialog-actions"><button class="primary" type="submit" id="lockSubmit">Desbloquear</button></div></form></dialog><dialog id="noteDialog"><div class="dialog-head"><strong id="noteTitle">Observação</strong><button type="button" class="close" data-close="noteDialog">×</button></div><p id="noteText"></p></dialog><dialog id="offsetDialog"><form id="offsetForm"><div class="dialog-head"><strong>Ajuste de horário</strong><button type="button" class="close" data-close="offsetDialog">×</button></div><p>Se o PC estiver 11 segundos atrasado, informe 11. Valores negativos adiantam o horário.</p><label for="offsetInput">Correção em segundos</label><input id="offsetInput" type="number" step="1" min="-300" max="300"><div class="dialog-actions"><button type="button" data-close="offsetDialog">Cancelar</button><button class="primary" type="submit">Salvar ajuste</button></div></form></dialog><div id="message" class="message" role="status" aria-live="polite"></div>
-<footer><strong>Os códigos são calculados neste navegador.</strong> Sem senha de bloqueio, as chaves ficam sem criptografia no navegador. Com ela ativa, ficam criptografadas e exigem o PIN para abrir. O PIN curto ainda permite tentativas offline se alguém copiar o armazenamento. A senha do backup Aegis não é guardada. Se esquecer o PIN de bloqueio, os dados locais não poderão ser recuperados; mantenha um backup externo. Os arquivos exportados usam suas próprias senhas.</footer>
-</main>
+<header><div class="brand"><svg class="brand-icon" viewBox="0 0 48 48" role="img" aria-label="Relógio TOTP"><circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 12v13l9 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><h1>Calculadora TOTP</h1></div><a class="pmx-credit" href="https://pedromx.com" target="_blank" rel="noopener noreferrer" title="Desenvolvido por Pedro Magno Martins Azevedo" aria-label="Desenvolvido por Pedro Magno Martins Azevedo — abrir pedromx.com"><img src="data:image/png;base64,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" alt="PMX"></a><button class="index-link" id="appearanceBtn" type="button">Configurar</button></header><div class="header-controls"><div class="action-row"><button id="lockBtn" type="button">PIN</button><button id="removePinBtn" type="button" hidden>Remover PIN</button><button id="offsetBtn" type="button">Ajustar atraso</button><button id="exportConfigBtn" class="primary" type="button">Exportar configuração</button><button id="lockNowBtn" type="button" disabled>Trancar</button></div><div class="action-row"><button id="exportBackupBtn" type="button">Exportar backup</button><button id="importBtn" type="button">Importar backup</button><button id="importConfigBtn" type="button">Importar configuração</button><button id="clearBtn" type="button">Limpar</button><input id="file" class="file-input" type="file" accept="application/json,.json"><input id="configFile" class="file-input" type="file" accept="application/json,.json"></div></div>
+<div class="intro"><div><span class="eyebrow">SEU ESPAÇO SEGURO</span><h2>Seus códigos, à mão</h2><p>Senhas de uso único baseadas no tempo</p></div><div class="clock" id="clock">--:--:--</div></div>
+<div id="grid" class="grid"></div><dialog id="lockDialog" class="pin-dialog"><form id="lockForm"><div class="dialog-head"><h2 id="lockTitle">PIN</h2><button type="button" id="lockCloseBtn" class="close" aria-label="Fechar">×</button></div><p id="lockHint">Digite seu PIN para abrir seus códigos.</p><div class="pin-field"><label id="lockPinLabel" for="lockPin">PIN de 4 a 6 dígitos</label><input id="lockPin" class="pin-entry" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••••" autocomplete="current-password" required><small class="pin-count" id="lockPinCount">0/6 dígitos</small></div><div id="newPinWrap" class="pin-field" hidden><label for="lockPinNew">Novo PIN</label><input id="lockPinNew" class="pin-entry" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••••" autocomplete="new-password"><small class="pin-count" id="lockPinNewCount">0/6 dígitos</small></div><div id="confirmWrap" class="pin-field" hidden><label for="lockPinConfirm">Confirmar PIN</label><input id="lockPinConfirm" class="pin-entry" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••••" autocomplete="new-password"><small class="pin-count" id="lockPinConfirmCount">0/6 dígitos</small></div><div id="lockError" role="status"></div><div class="dialog-actions"><button class="primary" type="submit" id="lockSubmit">Desbloquear</button></div></form></dialog><dialog id="noteDialog"><div class="dialog-head"><strong id="noteTitle">Observação</strong><button type="button" class="close" data-close="noteDialog">×</button></div><p id="noteText"></p></dialog><dialog id="offsetDialog"><form id="offsetForm"><div class="dialog-head"><strong>Ajuste de horário</strong><button type="button" class="close" data-close="offsetDialog">×</button></div><p>Se o PC estiver 11 segundos atrasado, informe 11. Valores negativos atrasam o horário usado no cálculo.</p><label for="offsetInput">Correção em segundos</label><input id="offsetInput" type="number" step="1" min="-300" max="300"><div class="dialog-actions"><button type="button" data-close="offsetDialog">Cancelar</button><button class="primary" type="submit">Salvar ajuste</button></div></form></dialog><div id="message" class="message" role="status" aria-live="polite"></div>
+<footer><strong>Os códigos são calculados neste navegador.</strong> Sem PIN, as chaves ficam sem criptografia no navegador. Com o PIN ativo, ficam criptografadas no disco e exigem o PIN para abrir. A chave fica somente na memória; o bloqueio acontece pelo botão Trancar, após 5 minutos sem interação ou ao recarregar/fechar a página. O PIN curto ainda permite tentativas offline se alguém copiar o armazenamento. A senha do backup Aegis não é guardada. Se esquecer o PIN de bloqueio, os dados locais não poderão ser recuperados; mantenha um backup externo. Os arquivos exportados usam suas próprias senhas.<div class="footer-links"><a href="https://p.pedromx.com/indice/" target="_blank" rel="noopener noreferrer">Acessar o índice</a><button id="helpBtn" type="button">Como configurar a Calculadora TOTP</button></div><div class="credit">Desenvolvido por Pedro Azevedo · <a href="https://pedromx.com" target="_blank" rel="noopener noreferrer">pedromx.com</a></div></footer>
+<dialog id="passwordDialog"><form id="passwordForm"><h2>Proteção do arquivo</h2><p id="passwordHint"></p><label for="passwordInput">Senha</label><input id="passwordInput" type="password" autocomplete="off" required><div class="dialog-actions"><button id="passwordCancel" type="button">Cancelar</button><button class="primary" type="submit">Continuar</button></div></form></dialog>
+<dialog id="appearanceDialog"><form id="appearanceForm"><h2>Configurar</h2><label for="clockFormat">Formato do relógio</label><select id="clockFormat"><option value="24">24 horas</option><option value="12">12 horas (AM/PM)</option></select><label for="accentInput">Cor de destaque</label><input id="accentInput" type="color"><label for="backgroundInput">Cor do plano de fundo</label><input id="backgroundInput" type="color"><p>A cor escolhida é guardada mesmo ao ativar o modo AMOLED</p><label class="check-label"><input id="amoledInput" type="checkbox"> Modo AMOLED — Preto para pixels desligados</label><div class="dialog-actions"><button type="button" data-close="appearanceDialog">Cancelar</button><button class="primary" type="submit">Salvar</button></div></form></dialog><dialog id="helpDialog"><h2>Como configurar a Calculadora TOTP</h2><p>Importe um backup JSON do Aegis para adicionar suas contas. Os códigos são calculados neste dispositivo; use Copiar para o código atual ou Próximo para o próximo período.</p><p>Em Configurar, escolha o formato do relógio, a Cor de destaque, o fundo e o modo AMOLED. Ajustar atraso corrige diferenças no horário usado nos códigos.</p><p>Use Configurar PIN para proteger os dados locais, Alterar PIN para trocá-lo e Remover PIN para desativar essa proteção. O bloqueio ocorre ao clicar em Trancar, após 5 minutos sem interação ou ao fechar/recarregar a página.</p><p>Exportar configuração reúne contas, ordem, descrições, ajuste de horário, aparência, formato do relógio e proteção por PIN em um arquivo criptografado. Guarde a senha do arquivo e o PIN. Em outro dispositivo, use Importar configuração e informe ambos, quando solicitados.</p><p>Exportar backup gera um arquivo compatível com Aegis, contendo as contas; as preferências desta página são incluídas apenas na configuração. Mantenha uma cópia externa: o armazenamento do navegador pode ser apagado.</p><div class="dialog-actions"><button type="button" data-close="helpDialog">Fechar</button></div></dialog>
+<dialog id="removePinDialog"><form id="removePinForm"><h2>Remover PIN</h2><p>As contas serão mantidas, mas ficarão sem criptografia no armazenamento deste navegador.</p><label for="removePinInput">PIN atual</label><input id="removePinInput" class="pin-entry" type="password" inputmode="numeric" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••••" autocomplete="current-password" required><p id="removePinError" role="status"></p><div class="dialog-actions"><button type="button" data-close="removePinDialog">Cancelar</button><button class="primary" type="submit">Remover PIN</button></div></form></dialog></main>
 <script>
 "use strict";
-
 (function(root) {
-    const MAX_VALUE = 0x7fffffff;
-
-    // The SHA256 and PBKDF2 implementation are from scrypt-async-js:
-    // See: https://github.com/dchest/scrypt-async-js
-    function SHA256(m) {
-        const K = new Uint32Array([
-           0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b,
-           0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01,
-           0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7,
-           0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
-           0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, 0x983e5152,
-           0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
-           0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc,
-           0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-           0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819,
-           0xd6990624, 0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08,
-           0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
-           0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-           0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-       ]);
-
-        let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a;
-        let h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
-        const w = new Uint32Array(64);
-
-        function blocks(p) {
-            let off = 0, len = p.length;
-            while (len >= 64) {
-                let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7, u, i, j, t1, t2;
-
-                for (i = 0; i < 16; i++) {
-                    j = off + i*4;
-                    w[i] = ((p[j] & 0xff)<<24) | ((p[j+1] & 0xff)<<16) |
-                    ((p[j+2] & 0xff)<<8) | (p[j+3] & 0xff);
-                }
-
-                for (i = 16; i < 64; i++) {
-                    u = w[i-2];
-                    t1 = ((u>>>17) | (u<<(32-17))) ^ ((u>>>19) | (u<<(32-19))) ^ (u>>>10);
-
-                    u = w[i-15];
-                    t2 = ((u>>>7) | (u<<(32-7))) ^ ((u>>>18) | (u<<(32-18))) ^ (u>>>3);
-
-                    w[i] = (((t1 + w[i-7]) | 0) + ((t2 + w[i-16]) | 0)) | 0;
-                }
-
-                for (i = 0; i < 64; i++) {
-                    t1 = ((((((e>>>6) | (e<<(32-6))) ^ ((e>>>11) | (e<<(32-11))) ^
-                             ((e>>>25) | (e<<(32-25)))) + ((e & f) ^ (~e & g))) | 0) +
-                          ((h + ((K[i] + w[i]) | 0)) | 0)) | 0;
-
-                    t2 = ((((a>>>2) | (a<<(32-2))) ^ ((a>>>13) | (a<<(32-13))) ^
-                           ((a>>>22) | (a<<(32-22)))) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
-
-                    h = g;
-                    g = f;
-                    f = e;
-                    e = (d + t1) | 0;
-                    d = c;
-                    c = b;
-                    b = a;
-                    a = (t1 + t2) | 0;
-                }
-
-                h0 = (h0 + a) | 0;
-                h1 = (h1 + b) | 0;
-                h2 = (h2 + c) | 0;
-                h3 = (h3 + d) | 0;
-                h4 = (h4 + e) | 0;
-                h5 = (h5 + f) | 0;
-                h6 = (h6 + g) | 0;
-                h7 = (h7 + h) | 0;
-
-                off += 64;
-                len -= 64;
-            }
-        }
-
-        blocks(m);
-
-        let i, bytesLeft = m.length % 64,
-        bitLenHi = (m.length / 0x20000000) | 0,
-        bitLenLo = m.length << 3,
-        numZeros = (bytesLeft < 56) ? 56 : 120,
-        p = m.slice(m.length - bytesLeft, m.length);
-
-        p.push(0x80);
-        for (i = bytesLeft + 1; i < numZeros; i++) { p.push(0); }
-        p.push((bitLenHi >>> 24) & 0xff);
-        p.push((bitLenHi >>> 16) & 0xff);
-        p.push((bitLenHi >>> 8)  & 0xff);
-        p.push((bitLenHi >>> 0)  & 0xff);
-        p.push((bitLenLo >>> 24) & 0xff);
-        p.push((bitLenLo >>> 16) & 0xff);
-        p.push((bitLenLo >>> 8)  & 0xff);
-        p.push((bitLenLo >>> 0)  & 0xff);
-
-        blocks(p);
-
-        return [
-            (h0 >>> 24) & 0xff, (h0 >>> 16) & 0xff, (h0 >>> 8) & 0xff, (h0 >>> 0) & 0xff,
-            (h1 >>> 24) & 0xff, (h1 >>> 16) & 0xff, (h1 >>> 8) & 0xff, (h1 >>> 0) & 0xff,
-            (h2 >>> 24) & 0xff, (h2 >>> 16) & 0xff, (h2 >>> 8) & 0xff, (h2 >>> 0) & 0xff,
-            (h3 >>> 24) & 0xff, (h3 >>> 16) & 0xff, (h3 >>> 8) & 0xff, (h3 >>> 0) & 0xff,
-            (h4 >>> 24) & 0xff, (h4 >>> 16) & 0xff, (h4 >>> 8) & 0xff, (h4 >>> 0) & 0xff,
-            (h5 >>> 24) & 0xff, (h5 >>> 16) & 0xff, (h5 >>> 8) & 0xff, (h5 >>> 0) & 0xff,
-            (h6 >>> 24) & 0xff, (h6 >>> 16) & 0xff, (h6 >>> 8) & 0xff, (h6 >>> 0) & 0xff,
-            (h7 >>> 24) & 0xff, (h7 >>> 16) & 0xff, (h7 >>> 8) & 0xff, (h7 >>> 0) & 0xff
-        ];
-    }
-
-    function PBKDF2_HMAC_SHA256_OneIter(password, salt, dkLen) {
-        // compress password if it's longer than hash block length
-        password = (password.length <= 64) ? password : SHA256(password);
-
-        const innerLen = 64 + salt.length + 4;
-        const inner = new Array(innerLen);
-        const outerKey = new Array(64);
-
-        let i;
-        let dk = [];
-
-        // inner = (password ^ ipad) || salt || counter
-        for (i = 0; i < 64; i++) { inner[i] = 0x36; }
-        for (i = 0; i < password.length; i++) { inner[i] ^= password[i]; }
-        for (i = 0; i < salt.length; i++) { inner[64 + i] = salt[i]; }
-        for (i = innerLen - 4; i < innerLen; i++) { inner[i] = 0; }
-
-        // outerKey = password ^ opad
-        for (i = 0; i < 64; i++) outerKey[i] = 0x5c;
-        for (i = 0; i < password.length; i++) outerKey[i] ^= password[i];
-
-        // increments counter inside inner
-        function incrementCounter() {
-            for (let i = innerLen - 1; i >= innerLen - 4; i--) {
-                inner[i]++;
-                if (inner[i] <= 0xff) return;
-                inner[i] = 0;
-            }
-        }
-
-        // output blocks = SHA256(outerKey || SHA256(inner)) ...
-        while (dkLen >= 32) {
-            incrementCounter();
-            dk = dk.concat(SHA256(outerKey.concat(SHA256(inner))));
-            dkLen -= 32;
-        }
-        if (dkLen > 0) {
-            incrementCounter();
-            dk = dk.concat(SHA256(outerKey.concat(SHA256(inner))).slice(0, dkLen));
-        }
-
-        return dk;
-    }
-
-    // The following is an adaptation of scryptsy
-    // See: https://www.npmjs.com/package/scryptsy
-    function blockmix_salsa8(BY, Yi, r, x, _X) {
-        let i;
-
-        arraycopy(BY, (2 * r - 1) * 16, _X, 0, 16);
-        for (i = 0; i < 2 * r; i++) {
-            blockxor(BY, i * 16, _X, 16);
-            salsa20_8(_X, x);
-            arraycopy(_X, 0, BY, Yi + (i * 16), 16);
-        }
-
-        for (i = 0; i < r; i++) {
-            arraycopy(BY, Yi + (i * 2) * 16, BY, (i * 16), 16);
-        }
-
-        for (i = 0; i < r; i++) {
-            arraycopy(BY, Yi + (i * 2 + 1) * 16, BY, (i + r) * 16, 16);
-        }
-    }
-
-    function R(a, b) {
-        return (a << b) | (a >>> (32 - b));
-    }
-
-    function salsa20_8(B, x) {
-        arraycopy(B, 0, x, 0, 16);
-
-        for (let i = 8; i > 0; i -= 2) {
-            x[ 4] ^= R(x[ 0] + x[12], 7);
-            x[ 8] ^= R(x[ 4] + x[ 0], 9);
-            x[12] ^= R(x[ 8] + x[ 4], 13);
-            x[ 0] ^= R(x[12] + x[ 8], 18);
-            x[ 9] ^= R(x[ 5] + x[ 1], 7);
-            x[13] ^= R(x[ 9] + x[ 5], 9);
-            x[ 1] ^= R(x[13] + x[ 9], 13);
-            x[ 5] ^= R(x[ 1] + x[13], 18);
-            x[14] ^= R(x[10] + x[ 6], 7);
-            x[ 2] ^= R(x[14] + x[10], 9);
-            x[ 6] ^= R(x[ 2] + x[14], 13);
-            x[10] ^= R(x[ 6] + x[ 2], 18);
-            x[ 3] ^= R(x[15] + x[11], 7);
-            x[ 7] ^= R(x[ 3] + x[15], 9);
-            x[11] ^= R(x[ 7] + x[ 3], 13);
-            x[15] ^= R(x[11] + x[ 7], 18);
-            x[ 1] ^= R(x[ 0] + x[ 3], 7);
-            x[ 2] ^= R(x[ 1] + x[ 0], 9);
-            x[ 3] ^= R(x[ 2] + x[ 1], 13);
-            x[ 0] ^= R(x[ 3] + x[ 2], 18);
-            x[ 6] ^= R(x[ 5] + x[ 4], 7);
-            x[ 7] ^= R(x[ 6] + x[ 5], 9);
-            x[ 4] ^= R(x[ 7] + x[ 6], 13);
-            x[ 5] ^= R(x[ 4] + x[ 7], 18);
-            x[11] ^= R(x[10] + x[ 9], 7);
-            x[ 8] ^= R(x[11] + x[10], 9);
-            x[ 9] ^= R(x[ 8] + x[11], 13);
-            x[10] ^= R(x[ 9] + x[ 8], 18);
-            x[12] ^= R(x[15] + x[14], 7);
-            x[13] ^= R(x[12] + x[15], 9);
-            x[14] ^= R(x[13] + x[12], 13);
-            x[15] ^= R(x[14] + x[13], 18);
-        }
-
-        for (let i = 0; i < 16; ++i) {
-            B[i] += x[i];
-        }
-    }
-
-    // naive approach... going back to loop unrolling may yield additional performance
-    function blockxor(S, Si, D, len) {
-        for (let i = 0; i < len; i++) {
-            D[i] ^= S[Si + i]
-        }
-    }
-
-    function arraycopy(src, srcPos, dest, destPos, length) {
-        while (length--) {
-            dest[destPos++] = src[srcPos++];
-        }
-    }
-
-    function checkBufferish(o) {
-        if (!o || typeof(o.length) !== 'number') { return false; }
-
-        for (let i = 0; i < o.length; i++) {
-            const v = o[i];
-            if (typeof(v) !== 'number' || v % 1 || v < 0 || v >= 256) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    function ensureInteger(value, name) {
-        if (typeof(value) !== "number" || (value % 1)) { throw new Error('invalid ' + name); }
-        return value;
-    }
-
-    // N = Cpu cost, r = Memory cost, p = parallelization cost
-    // callback(error, progress, key)
-    function _scrypt(password, salt, N, r, p, dkLen, callback) {
-
-        N = ensureInteger(N, 'N');
-        r = ensureInteger(r, 'r');
-        p = ensureInteger(p, 'p');
-
-        dkLen = ensureInteger(dkLen, 'dkLen');
-
-        if (N === 0 || (N & (N - 1)) !== 0) { throw new Error('N must be power of 2'); }
-
-        if (N > MAX_VALUE / 128 / r) { throw new Error('N too large'); }
-        if (r > MAX_VALUE / 128 / p) { throw new Error('r too large'); }
-
-        if (!checkBufferish(password)) {
-            throw new Error('password must be an array or buffer');
-        }
-        password = Array.prototype.slice.call(password);
-
-        if (!checkBufferish(salt)) {
-            throw new Error('salt must be an array or buffer');
-        }
-        salt = Array.prototype.slice.call(salt);
-
-        let b = PBKDF2_HMAC_SHA256_OneIter(password, salt, p * 128 * r);
-        const B = new Uint32Array(p * 32 * r)
-        for (let i = 0; i < B.length; i++) {
-            const j = i * 4;
-            B[i] = ((b[j + 3] & 0xff) << 24) |
-                   ((b[j + 2] & 0xff) << 16) |
-                   ((b[j + 1] & 0xff) << 8) |
-                   ((b[j + 0] & 0xff) << 0);
-        }
-
-        const XY = new Uint32Array(64 * r);
-        const V = new Uint32Array(32 * r * N);
-
-        const Yi = 32 * r;
-
-        // scratch space
-        const x = new Uint32Array(16);       // salsa20_8
-        const _X = new Uint32Array(16);      // blockmix_salsa8
-
-        const totalOps = p * N * 2;
-        let currentOp = 0;
-        let lastPercent10 = null;
-
-        // Set this to true to abandon the scrypt on the next step
-        let stop = false;
-
-        // State information
-        let state = 0;
-        let i0 = 0, i1;
-        let Bi;
-
-        // How many blockmix_salsa8 can we do per step?
-        const limit = callback ? parseInt(1000 / r): 0xffffffff;
-
-        // Trick from scrypt-async; if there is a setImmediate shim in place, use it
-        const nextTick = (typeof(setImmediate) !== 'undefined') ? setImmediate : setTimeout;
-
-        // This is really all I changed; making scryptsy a state machine so we occasionally
-        // stop and give other evnts on the evnt loop a chance to run. ~RicMoo
-        const incrementalSMix = function() {
-            if (stop) {
-                return callback(new Error('cancelled'), currentOp / totalOps);
-            }
-
-            let steps;
-
-            switch (state) {
-                case 0:
-                    // for (var i = 0; i < p; i++)...
-                    Bi = i0 * 32 * r;
-
-                    arraycopy(B, Bi, XY, 0, Yi);                       // ROMix - 1
-
-                    state = 1;                                         // Move to ROMix 2
-                    i1 = 0;
-
-                    // Fall through
-
-                case 1:
-
-                    // Run up to 1000 steps of the first inner smix loop
-                    steps = N - i1;
-                    if (steps > limit) { steps = limit; }
-                    for (let i = 0; i < steps; i++) {                  // ROMix - 2
-                        arraycopy(XY, 0, V, (i1 + i) * Yi, Yi)         // ROMix - 3
-                        blockmix_salsa8(XY, Yi, r, x, _X);             // ROMix - 4
-                    }
-
-                    // for (var i = 0; i < N; i++)
-                    i1 += steps;
-                    currentOp += steps;
-
-                    if (callback) {
-                        // Call the callback with the progress (optionally stopping us)
-                        const percent10 = parseInt(1000 * currentOp / totalOps);
-                        if (percent10 !== lastPercent10) {
-                            stop = callback(null, currentOp / totalOps);
-                            if (stop) { break; }
-                            lastPercent10 = percent10;
-                        }
-                    }
-
-                    if (i1 < N) { break; }
-
-                    i1 = 0;                                          // Move to ROMix 6
-                    state = 2;
-
-                    // Fall through
-
-                case 2:
-
-                    // Run up to 1000 steps of the second inner smix loop
-                    steps = N - i1;
-                    if (steps > limit) { steps = limit; }
-                    for (let i = 0; i < steps; i++) {                // ROMix - 6
-                        const offset = (2 * r - 1) * 16;             // ROMix - 7
-                        const j = XY[offset] & (N - 1);
-                        blockxor(V, j * Yi, XY, Yi);                 // ROMix - 8 (inner)
-                        blockmix_salsa8(XY, Yi, r, x, _X);           // ROMix - 9 (outer)
-                    }
-
-                    // for (var i = 0; i < N; i++)...
-                    i1 += steps;
-                    currentOp += steps;
-
-                    // Call the callback with the progress (optionally stopping us)
-                    if (callback) {
-                        const percent10 = parseInt(1000 * currentOp / totalOps);
-                        if (percent10 !== lastPercent10) {
-                            stop = callback(null, currentOp / totalOps);
-                            if (stop) { break; }
-                            lastPercent10 = percent10;
-                        }
-                    }
-
-                    if (i1 < N) { break; }
-
-                    arraycopy(XY, 0, B, Bi, Yi);                     // ROMix - 10
-
-                    // for (var i = 0; i < p; i++)...
-                    i0++;
-                    if (i0 < p) {
-                        state = 0;
-                        break;
-                    }
-
-                    b = [];
-                    for (let i = 0; i < B.length; i++) {
-                        b.push((B[i] >>  0) & 0xff);
-                        b.push((B[i] >>  8) & 0xff);
-                        b.push((B[i] >> 16) & 0xff);
-                        b.push((B[i] >> 24) & 0xff);
-                    }
-
-                    const derivedKey = PBKDF2_HMAC_SHA256_OneIter(password, b, dkLen);
-
-                    // Send the result to the callback
-                    if (callback) { callback(null, 1.0, derivedKey); }
-
-                    // Done; don't break (which would reschedule)
-                    return derivedKey;
-            }
-
-            // Schedule the next steps
-            if (callback) { nextTick(incrementalSMix); }
-        }
-
-        // Run the smix state machine until completion
-        if (!callback) {
-            while (true) {
-                const derivedKey = incrementalSMix();
-                if (derivedKey != undefined) { return derivedKey; }
-            }
-        }
-
-        // Bootstrap the async incremental smix
-        incrementalSMix();
-    }
-
-    const lib = {
-        scrypt: function(password, salt, N, r, p, dkLen, progressCallback) {
-            return new Promise(function(resolve, reject) {
-                let lastProgress = 0;
-                if (progressCallback) { progressCallback(0); }
-                _scrypt(password, salt, N, r, p, dkLen, function(error, progress, key) {
-                    if (error) {
-                        reject(error);
-                    } else if (key) {
-                        if (progressCallback && lastProgress !== 1) {
-                            progressCallback(1);
-                        }
-                        resolve(new Uint8Array(key));
-                    } else if (progressCallback && progress !== lastProgress) {
-                        lastProgress = progress;
-                        return progressCallback(progress);
-                    }
-                });
-            });
-        },
-        syncScrypt: function(password, salt, N, r, p, dkLen) {
-            return new Uint8Array(_scrypt(password, salt, N, r, p, dkLen));
-        }
-    };
-
-    // node.js
-    if (typeof(exports) !== 'undefined') {
-       module.exports = lib;
-
-    // RequireJS/AMD
-    // http://www.requirejs.org/docs/api.html
-    // https://github.com/amdjs/amdjs-api/wiki/AMD
-    } else if (typeof(define) === 'function' && define.amd) {
-        define(lib);
-
-    // Web Browsers
-    } else if (root) {
-
-        // If there was an existing library "scrypt", make sure it is still available
-        if (root.scrypt) {
-            root._scrypt = root.scrypt;
-        }
-
-        root.scrypt = lib;
-    }
-
+const MAX_VALUE = 0x7fffffff;
+function SHA256(m) {
+const K = new Uint32Array([
+0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b,
+0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01,
+0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7,
+0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
+0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, 0x983e5152,
+0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc,
+0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819,
+0xd6990624, 0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08,
+0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
+0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+]);
+let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a;
+let h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
+const w = new Uint32Array(64);
+function blocks(p) {
+let off = 0, len = p.length;
+while (len >= 64) {
+let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7, u, i, j, t1, t2;
+for (i = 0; i < 16; i++) {
+j = off + i*4;
+w[i] = ((p[j] & 0xff)<<24) | ((p[j+1] & 0xff)<<16) |
+((p[j+2] & 0xff)<<8) | (p[j+3] & 0xff);
+}
+for (i = 16; i < 64; i++) {
+u = w[i-2];
+t1 = ((u>>>17) | (u<<(32-17))) ^ ((u>>>19) | (u<<(32-19))) ^ (u>>>10);
+u = w[i-15];
+t2 = ((u>>>7) | (u<<(32-7))) ^ ((u>>>18) | (u<<(32-18))) ^ (u>>>3);
+w[i] = (((t1 + w[i-7]) | 0) + ((t2 + w[i-16]) | 0)) | 0;
+}
+for (i = 0; i < 64; i++) {
+t1 = ((((((e>>>6) | (e<<(32-6))) ^ ((e>>>11) | (e<<(32-11))) ^
+((e>>>25) | (e<<(32-25)))) + ((e & f) ^ (~e & g))) | 0) +
+((h + ((K[i] + w[i]) | 0)) | 0)) | 0;
+t2 = ((((a>>>2) | (a<<(32-2))) ^ ((a>>>13) | (a<<(32-13))) ^
+((a>>>22) | (a<<(32-22)))) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+h = g;
+g = f;
+f = e;
+e = (d + t1) | 0;
+d = c;
+c = b;
+b = a;
+a = (t1 + t2) | 0;
+}
+h0 = (h0 + a) | 0;
+h1 = (h1 + b) | 0;
+h2 = (h2 + c) | 0;
+h3 = (h3 + d) | 0;
+h4 = (h4 + e) | 0;
+h5 = (h5 + f) | 0;
+h6 = (h6 + g) | 0;
+h7 = (h7 + h) | 0;
+off += 64;
+len -= 64;
+}
+}
+blocks(m);
+let i, bytesLeft = m.length % 64,
+bitLenHi = (m.length / 0x20000000) | 0,
+bitLenLo = m.length << 3,
+numZeros = (bytesLeft < 56) ? 56 : 120,
+p = m.slice(m.length - bytesLeft, m.length);
+p.push(0x80);
+for (i = bytesLeft + 1; i < numZeros; i++) { p.push(0); }
+p.push((bitLenHi >>> 24) & 0xff);
+p.push((bitLenHi >>> 16) & 0xff);
+p.push((bitLenHi >>> 8)  & 0xff);
+p.push((bitLenHi >>> 0)  & 0xff);
+p.push((bitLenLo >>> 24) & 0xff);
+p.push((bitLenLo >>> 16) & 0xff);
+p.push((bitLenLo >>> 8)  & 0xff);
+p.push((bitLenLo >>> 0)  & 0xff);
+blocks(p);
+return [
+(h0 >>> 24) & 0xff, (h0 >>> 16) & 0xff, (h0 >>> 8) & 0xff, (h0 >>> 0) & 0xff,
+(h1 >>> 24) & 0xff, (h1 >>> 16) & 0xff, (h1 >>> 8) & 0xff, (h1 >>> 0) & 0xff,
+(h2 >>> 24) & 0xff, (h2 >>> 16) & 0xff, (h2 >>> 8) & 0xff, (h2 >>> 0) & 0xff,
+(h3 >>> 24) & 0xff, (h3 >>> 16) & 0xff, (h3 >>> 8) & 0xff, (h3 >>> 0) & 0xff,
+(h4 >>> 24) & 0xff, (h4 >>> 16) & 0xff, (h4 >>> 8) & 0xff, (h4 >>> 0) & 0xff,
+(h5 >>> 24) & 0xff, (h5 >>> 16) & 0xff, (h5 >>> 8) & 0xff, (h5 >>> 0) & 0xff,
+(h6 >>> 24) & 0xff, (h6 >>> 16) & 0xff, (h6 >>> 8) & 0xff, (h6 >>> 0) & 0xff,
+(h7 >>> 24) & 0xff, (h7 >>> 16) & 0xff, (h7 >>> 8) & 0xff, (h7 >>> 0) & 0xff
+];
+}
+function PBKDF2_HMAC_SHA256_OneIter(password, salt, dkLen) {
+password = (password.length <= 64) ? password : SHA256(password);
+const innerLen = 64 + salt.length + 4;
+const inner = new Array(innerLen);
+const outerKey = new Array(64);
+let i;
+let dk = [];
+for (i = 0; i < 64; i++) { inner[i] = 0x36; }
+for (i = 0; i < password.length; i++) { inner[i] ^= password[i]; }
+for (i = 0; i < salt.length; i++) { inner[64 + i] = salt[i]; }
+for (i = innerLen - 4; i < innerLen; i++) { inner[i] = 0; }
+for (i = 0; i < 64; i++) outerKey[i] = 0x5c;
+for (i = 0; i < password.length; i++) outerKey[i] ^= password[i];
+function incrementCounter() {
+for (let i = innerLen - 1; i >= innerLen - 4; i--) {
+inner[i]++;
+if (inner[i] <= 0xff) return;
+inner[i] = 0;
+}
+}
+while (dkLen >= 32) {
+incrementCounter();
+dk = dk.concat(SHA256(outerKey.concat(SHA256(inner))));
+dkLen -= 32;
+}
+if (dkLen > 0) {
+incrementCounter();
+dk = dk.concat(SHA256(outerKey.concat(SHA256(inner))).slice(0, dkLen));
+}
+return dk;
+}
+function blockmix_salsa8(BY, Yi, r, x, _X) {
+let i;
+arraycopy(BY, (2 * r - 1) * 16, _X, 0, 16);
+for (i = 0; i < 2 * r; i++) {
+blockxor(BY, i * 16, _X, 16);
+salsa20_8(_X, x);
+arraycopy(_X, 0, BY, Yi + (i * 16), 16);
+}
+for (i = 0; i < r; i++) {
+arraycopy(BY, Yi + (i * 2) * 16, BY, (i * 16), 16);
+}
+for (i = 0; i < r; i++) {
+arraycopy(BY, Yi + (i * 2 + 1) * 16, BY, (i + r) * 16, 16);
+}
+}
+function R(a, b) {
+return (a << b) | (a >>> (32 - b));
+}
+function salsa20_8(B, x) {
+arraycopy(B, 0, x, 0, 16);
+for (let i = 8; i > 0; i -= 2) {
+x[ 4] ^= R(x[ 0] + x[12], 7);
+x[ 8] ^= R(x[ 4] + x[ 0], 9);
+x[12] ^= R(x[ 8] + x[ 4], 13);
+x[ 0] ^= R(x[12] + x[ 8], 18);
+x[ 9] ^= R(x[ 5] + x[ 1], 7);
+x[13] ^= R(x[ 9] + x[ 5], 9);
+x[ 1] ^= R(x[13] + x[ 9], 13);
+x[ 5] ^= R(x[ 1] + x[13], 18);
+x[14] ^= R(x[10] + x[ 6], 7);
+x[ 2] ^= R(x[14] + x[10], 9);
+x[ 6] ^= R(x[ 2] + x[14], 13);
+x[10] ^= R(x[ 6] + x[ 2], 18);
+x[ 3] ^= R(x[15] + x[11], 7);
+x[ 7] ^= R(x[ 3] + x[15], 9);
+x[11] ^= R(x[ 7] + x[ 3], 13);
+x[15] ^= R(x[11] + x[ 7], 18);
+x[ 1] ^= R(x[ 0] + x[ 3], 7);
+x[ 2] ^= R(x[ 1] + x[ 0], 9);
+x[ 3] ^= R(x[ 2] + x[ 1], 13);
+x[ 0] ^= R(x[ 3] + x[ 2], 18);
+x[ 6] ^= R(x[ 5] + x[ 4], 7);
+x[ 7] ^= R(x[ 6] + x[ 5], 9);
+x[ 4] ^= R(x[ 7] + x[ 6], 13);
+x[ 5] ^= R(x[ 4] + x[ 7], 18);
+x[11] ^= R(x[10] + x[ 9], 7);
+x[ 8] ^= R(x[11] + x[10], 9);
+x[ 9] ^= R(x[ 8] + x[11], 13);
+x[10] ^= R(x[ 9] + x[ 8], 18);
+x[12] ^= R(x[15] + x[14], 7);
+x[13] ^= R(x[12] + x[15], 9);
+x[14] ^= R(x[13] + x[12], 13);
+x[15] ^= R(x[14] + x[13], 18);
+}
+for (let i = 0; i < 16; ++i) {
+B[i] += x[i];
+}
+}
+function blockxor(S, Si, D, len) {
+for (let i = 0; i < len; i++) {
+D[i] ^= S[Si + i]
+}
+}
+function arraycopy(src, srcPos, dest, destPos, length) {
+while (length--) {
+dest[destPos++] = src[srcPos++];
+}
+}
+function checkBufferish(o) {
+if (!o || typeof(o.length) !== 'number') { return false; }
+for (let i = 0; i < o.length; i++) {
+const v = o[i];
+if (typeof(v) !== 'number' || v % 1 || v < 0 || v >= 256) {
+return false;
+}
+}
+return true;
+}
+function ensureInteger(value, name) {
+if (typeof(value) !== "number" || (value % 1)) { throw new Error('invalid ' + name); }
+return value;
+}
+function _scrypt(password, salt, N, r, p, dkLen, callback) {
+N = ensureInteger(N, 'N');
+r = ensureInteger(r, 'r');
+p = ensureInteger(p, 'p');
+dkLen = ensureInteger(dkLen, 'dkLen');
+if (N === 0 || (N & (N - 1)) !== 0) { throw new Error('N must be power of 2'); }
+if (N > MAX_VALUE / 128 / r) { throw new Error('N too large'); }
+if (r > MAX_VALUE / 128 / p) { throw new Error('r too large'); }
+if (!checkBufferish(password)) {
+throw new Error('password must be an array or buffer');
+}
+password = Array.prototype.slice.call(password);
+if (!checkBufferish(salt)) {
+throw new Error('salt must be an array or buffer');
+}
+salt = Array.prototype.slice.call(salt);
+let b = PBKDF2_HMAC_SHA256_OneIter(password, salt, p * 128 * r);
+const B = new Uint32Array(p * 32 * r)
+for (let i = 0; i < B.length; i++) {
+const j = i * 4;
+B[i] = ((b[j + 3] & 0xff) << 24) |
+((b[j + 2] & 0xff) << 16) |
+((b[j + 1] & 0xff) << 8) |
+((b[j + 0] & 0xff) << 0);
+}
+const XY = new Uint32Array(64 * r);
+const V = new Uint32Array(32 * r * N);
+const Yi = 32 * r;
+const x = new Uint32Array(16);
+const _X = new Uint32Array(16);
+const totalOps = p * N * 2;
+let currentOp = 0;
+let lastPercent10 = null;
+let stop = false;
+let state = 0;
+let i0 = 0, i1;
+let Bi;
+const limit = callback ? parseInt(1000 / r): 0xffffffff;
+const nextTick = (typeof(setImmediate) !== 'undefined') ? setImmediate : setTimeout;
+const incrementalSMix = function() {
+if (stop) {
+return callback(new Error('cancelled'), currentOp / totalOps);
+}
+let steps;
+switch (state) {
+case 0:
+Bi = i0 * 32 * r;
+arraycopy(B, Bi, XY, 0, Yi);
+state = 1;
+i1 = 0;
+case 1:
+steps = N - i1;
+if (steps > limit) { steps = limit; }
+for (let i = 0; i < steps; i++) {
+arraycopy(XY, 0, V, (i1 + i) * Yi, Yi)
+blockmix_salsa8(XY, Yi, r, x, _X);
+}
+i1 += steps;
+currentOp += steps;
+if (callback) {
+const percent10 = parseInt(1000 * currentOp / totalOps);
+if (percent10 !== lastPercent10) {
+stop = callback(null, currentOp / totalOps);
+if (stop) { break; }
+lastPercent10 = percent10;
+}
+}
+if (i1 < N) { break; }
+i1 = 0;
+state = 2;
+case 2:
+steps = N - i1;
+if (steps > limit) { steps = limit; }
+for (let i = 0; i < steps; i++) {
+const offset = (2 * r - 1) * 16;
+const j = XY[offset] & (N - 1);
+blockxor(V, j * Yi, XY, Yi);
+blockmix_salsa8(XY, Yi, r, x, _X);
+}
+i1 += steps;
+currentOp += steps;
+if (callback) {
+const percent10 = parseInt(1000 * currentOp / totalOps);
+if (percent10 !== lastPercent10) {
+stop = callback(null, currentOp / totalOps);
+if (stop) { break; }
+lastPercent10 = percent10;
+}
+}
+if (i1 < N) { break; }
+arraycopy(XY, 0, B, Bi, Yi);
+i0++;
+if (i0 < p) {
+state = 0;
+break;
+}
+b = [];
+for (let i = 0; i < B.length; i++) {
+b.push((B[i] >>  0) & 0xff);
+b.push((B[i] >>  8) & 0xff);
+b.push((B[i] >> 16) & 0xff);
+b.push((B[i] >> 24) & 0xff);
+}
+const derivedKey = PBKDF2_HMAC_SHA256_OneIter(password, b, dkLen);
+if (callback) { callback(null, 1.0, derivedKey); }
+return derivedKey;
+}
+if (callback) { nextTick(incrementalSMix); }
+}
+if (!callback) {
+while (true) {
+const derivedKey = incrementalSMix();
+if (derivedKey != undefined) { return derivedKey; }
+}
+}
+incrementalSMix();
+}
+const lib = {
+scrypt: function(password, salt, N, r, p, dkLen, progressCallback) {
+return new Promise(function(resolve, reject) {
+let lastProgress = 0;
+if (progressCallback) { progressCallback(0); }
+_scrypt(password, salt, N, r, p, dkLen, function(error, progress, key) {
+if (error) {
+reject(error);
+} else if (key) {
+if (progressCallback && lastProgress !== 1) {
+progressCallback(1);
+}
+resolve(new Uint8Array(key));
+} else if (progressCallback && progress !== lastProgress) {
+lastProgress = progress;
+return progressCallback(progress);
+}
+});
+});
+},
+syncScrypt: function(password, salt, N, r, p, dkLen) {
+return new Uint8Array(_scrypt(password, salt, N, r, p, dkLen));
+}
+};
+if (typeof(exports) !== 'undefined') {
+module.exports = lib;
+} else if (typeof(define) === 'function' && define.amd) {
+define(lib);
+} else if (root) {
+if (root.scrypt) {
+root._scrypt = root.scrypt;
+}
+root.scrypt = lib;
+}
 })(this);
-
 </script>
 <script>
 'use strict';
 const STORE='totp-local-v1',OFFSET_STORE='totp-time-offset-v1',LOCK_FLAG='totp-lock-enabled-v1',CONFIG_PASS_KEY='totp-config-password-v1',SESSION_UNLOCKED='totp-session-unlocked-v1';let entries=[];let timeOffset=Number(localStorage.getItem(OFFSET_STORE)||0);let lockEnabled=localStorage.getItem(LOCK_FLAG)==='1',isLocked=lockEnabled,lockCryptoKey=null,lockSalt=null,idleTimer=null,lockMode='unlock';
-const $=id=>document.getElementById(id);const cleanBase32=s=>String(s||'').toUpperCase().replace(/[^A-Z2-7]/g,'');
-function b32bytes(str){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits='',out=[];for(const c of cleanBase32(str)){const n=chars.indexOf(c);if(n<0)throw Error('Segredo Base32 inválido');bits+=n.toString(2).padStart(5,'0')}for(let i=0;i+8<=bits.length;i+=8)out.push(parseInt(bits.slice(i,i+8),2));if(!out.length)throw Error('Segredo vazio ou inválido');return new Uint8Array(out)}
-function normalized(item){const info=item.info||item;return {id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),name:String(item.name||item.label||'Conta sem nome'),issuer:String(item.issuer||''),note:String(item.note||item.description||''),secret:cleanBase32(info.secret||item.secret),algo:String(info.algo||info.algorithm||item.algorithm||'SHA1').toUpperCase().replace('-',''),digits:Number(info.digits||item.digits||6),period:Number(info.period||item.period||30),type:String(item.type||'totp').toLowerCase()}}
-function validate(items){if(!Array.isArray(items)||!items.length)throw Error('Não encontrei contas no arquivo.');const mapped=items.filter(x=>['totp','steam'].includes(String(x.type||'totp').toLowerCase())).map(normalized);if(!mapped.length)throw Error('Não encontrei entradas TOTP ou Steam compatíveis.');for(const e of mapped){if(!e.secret)throw Error('Uma entrada não contém segredo.');b32bytes(e.secret);if(e.type==='steam'){if(e.digits!==5||e.algo!=='SHA1'||e.period!==30)throw Error('Entrada Steam precisa usar SHA1, 5 caracteres e período de 30 segundos.')}else{if(![6,7,8].includes(e.digits))throw Error('Quantidade de dígitos não suportada.');if(!['SHA1','SHA256','SHA512'].includes(e.algo))throw Error('Algoritmo não suportado: '+e.algo);if(!Number.isFinite(e.period)||e.period<1)throw Error('Período inválido.')}}return mapped}function extract(data){if(Array.isArray(data))return data;if(data&&Array.isArray(data.entries))return data.entries;if(data&&data.db&&typeof data.db==='object'&&Array.isArray(data.db.entries))return data.db.entries;throw Error('Formato não reconhecido. Selecione o JSON descriptografado do Aegis.')}
-async function save(){if(lockEnabled){if(!lockCryptoKey||!lockSalt)throw Error('Desbloqueie a página para salvar.');const iv=crypto.getRandomValues(new Uint8Array(12));const payload={entries,timeOffset};const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},lockCryptoKey,encoder.encode(JSON.stringify(payload)));localStorage.setItem(STORE,JSON.stringify({format:'totp-lock-v1',version:1,salt:bytes64(lockSalt),iv:bytes64(iv),ciphertext:bytes64(cipher)}));localStorage.removeItem(OFFSET_STORE)}else{localStorage.setItem(STORE,JSON.stringify(entries));localStorage.setItem(OFFSET_STORE,String(timeOffset))}}function say(s){$('message').textContent=s;setTimeout(()=>{if($('message').textContent===s)$('message').textContent=''},4500)}
-async function totp(e,now=Date.now()){const counter=Math.floor(now/1000/e.period),buf=new ArrayBuffer(8),view=new DataView(buf);view.setUint32(4,counter);const hash=e.type==='steam'?'SHA-1':({SHA1:'SHA-1',SHA256:'SHA-256',SHA512:'SHA-512'})[e.algo];const key=await crypto.subtle.importKey('raw',b32bytes(e.secret),{name:'HMAC',hash},false,['sign']);const mac=new Uint8Array(await crypto.subtle.sign('HMAC',key,buf));const offset=mac[mac.length-1]&15;let code=(mac[offset]&127)*0x1000000+mac[offset+1]*0x10000+mac[offset+2]*0x100+mac[offset+3];if(e.type==='steam'){const alphabet='23456789BCDFGHJKMNPQRTVWXY';let result='';for(let i=0;i<5;i++){const index=code%alphabet.length;result+=alphabet[index];code=Math.floor(code/alphabet.length)}return result}return String(code%10**e.digits).padStart(e.digits,'0')}let configPassphrase=null;
+const $=id=>document.getElementById(id);const cleanBase32=s=>{const v=String(s||'').toUpperCase().replace(/\s/g,'');if(!/^[A-Z2-7]+={0,6}$/.test(v))throw Error('Segredo Base32 inválido');const raw=v.replace(/=+$/,'');if(![0,2,4,5,7].includes(raw.length%8))throw Error('Comprimento Base32 inválido');return raw};
+function b32bytes(str){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits='',out=[];for(const c of cleanBase32(str)){const n=chars.indexOf(c);if(n<0)throw Error('Segredo Base32 inválido');bits+=n.toString(2).padStart(5,'0')}for(let i=0;i+8<=bits.length;i+=8)out.push(parseInt(bits.slice(i,i+8),2));if(!out.length||/1/.test(bits.slice(out.length*8)))throw Error('Segredo vazio ou inválido');return new Uint8Array(out)}
+function normalized(item){const info=item.info||item;return {id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),name:String(item.name||item.label||'Conta sem nome'),issuer:String(item.issuer||''),note:String(item.note||item.description||''),secret:cleanBase32(info.secret||item.secret),algo:String(info.algo||info.algorithm||item.algorithm||'SHA1').toUpperCase().replace('-',''),digits:Number(info.digits??item.digits??(item.type==='steam'?5:6)),period:Number(info.period??item.period??30),type:String(item.type||'totp').toLowerCase()}}
+function validate(items){if(!Array.isArray(items)||!items.length||items.length>1000||items.some(x=>!x||typeof x!=='object'))throw Error('Não encontrei contas no arquivo.');const mapped=items.filter(x=>['totp','steam'].includes(String(x.type||'totp').toLowerCase())).map(normalized);if(!mapped.length)throw Error('Não encontrei entradas TOTP ou Steam compatíveis.');for(const e of mapped){if(!e.secret)throw Error('Uma entrada não contém segredo.');b32bytes(e.secret);if(e.type==='steam'){if(e.digits!==5||e.algo!=='SHA1'||e.period!==30)throw Error('Entrada Steam precisa usar SHA1, 5 caracteres e período de 30 segundos.')}else{if(![6,7,8].includes(e.digits))throw Error('Quantidade de dígitos não suportada.');if(!['SHA1','SHA256','SHA512'].includes(e.algo))throw Error('Algoritmo não suportado: '+e.algo);if(!Number.isSafeInteger(e.period)||e.period<1||e.period>86400)throw Error('Período inválido.')}}return mapped}function extract(data){if(Array.isArray(data))return data;if(data&&Array.isArray(data.entries))return data.entries;if(data&&data.db&&typeof data.db==='object'&&Array.isArray(data.db.entries))return data.db.entries;throw Error('Formato não reconhecido. Selecione o JSON descriptografado do Aegis.')}
+async function save(){if(lockEnabled){if(!lockCryptoKey||!lockSalt)throw Error('Desbloqueie a página para salvar.');const key=lockCryptoKey,salt=lockSalt,iv=crypto.getRandomValues(new Uint8Array(12));const payload={entries,timeOffset};const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(JSON.stringify(payload)));if(isLocked||lockCryptoKey!==key)throw Error('Cofre trancado durante o salvamento');localStorage.setItem(STORE,JSON.stringify({format:'totp-lock-v1',version:1,salt:bytes64(salt),iv:bytes64(iv),ciphertext:bytes64(cipher)}));localStorage.removeItem(OFFSET_STORE)}else{localStorage.setItem(STORE,JSON.stringify(entries));localStorage.setItem(OFFSET_STORE,String(timeOffset))}}function say(s){$('message').textContent=s;setTimeout(()=>{if($('message').textContent===s)$('message').textContent=''},4500)}
+async function totp(e,now=Date.now()){const counter=Math.floor(now/1000/e.period),buf=new ArrayBuffer(8),view=new DataView(buf);if(!Number.isSafeInteger(counter)||counter<0)throw Error('Horário inválido');view.setBigUint64(0,BigInt(counter));const hash=e.type==='steam'?'SHA-1':({SHA1:'SHA-1',SHA256:'SHA-256',SHA512:'SHA-512'})[e.algo];const key=await crypto.subtle.importKey('raw',b32bytes(e.secret),{name:'HMAC',hash},false,['sign']);const mac=new Uint8Array(await crypto.subtle.sign('HMAC',key,buf));const offset=mac[mac.length-1]&15;let code=(mac[offset]&127)*0x1000000+mac[offset+1]*0x10000+mac[offset+2]*0x100+mac[offset+3];if(e.type==='steam'){const alphabet='23456789BCDFGHJKMNPQRTVWXY';let result='';for(let i=0;i<5;i++){const index=code%alphabet.length;result+=alphabet[index];code=Math.floor(code/alphabet.length)}return result}return String(code%10**e.digits).padStart(e.digits,'0')}let configPassphrase=null;
 const encoder=new TextEncoder(),decoder=new TextDecoder();
 function hexBytes(h){if(!/^(?:[0-9a-f]{2})+$/i.test(h))throw Error('Hexadecimal inválido no backup.');return Uint8Array.from(h.match(/.{2}/g),b=>parseInt(b,16))}function hex(b){return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function b64bytes(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0))}function bytes64(b){let s='';for(const x of new Uint8Array(b))s+=String.fromCharCode(x);return btoa(s)}function joinBytes(a,b){const out=new Uint8Array(a.length+b.length);out.set(a);out.set(b,a.length);return out}
 function uuid(){return crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=crypto.getRandomValues(new Uint8Array(1))[0]&15;return(c==='x'?r:(r&3|8)).toString(16)})}
+async function readJsonFile(file){if(file.size>16777216)throw Error('Arquivo maior que 16 MB');return file.text()}
 function downloadJson(obj,name){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-function promptPassword(label){const value=prompt(label);return value===null?null:value}function newPassphrase(label){const p=promptPassword(label+'\nUse pelo menos 8 caracteres.');if(p===null)return null;if(p.length<8)throw Error('A senha precisa ter pelo menos 8 caracteres.');const q=promptPassword('Confirme a senha.');if(q===null)return null;if(q!==p)throw Error('As senhas não coincidem.');return p}
-async function decryptAegis(data){if(data&&Array.isArray(data.entries))return data;if(data&&data.db&&typeof data.db==='object')return data.db;if(!data||typeof data.db!=='string'||!data.header)throw Error('Formato de backup Aegis inválido.');const slots=(data.header.slots||[]).filter(x=>x.type===1);if(!slots.length)throw Error('O backup não tem slot de senha compatível (backup biométrico ou formato não suportado).');const password=promptPassword('Senha de criptografia do backup Aegis:');if(password===null)throw Error('Importação cancelada.');let master=null;for(const slot of slots){try{const derived=await scrypt.scrypt(encoder.encode(password),hexBytes(slot.salt),slot.n,slot.r,slot.p,32);const wrapping=await crypto.subtle.importKey('raw',derived,'AES-GCM',false,['decrypt']);const kp=slot.key_params;master=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:hexBytes(kp.nonce),tagLength:128},wrapping,joinBytes(hexBytes(slot.key),hexBytes(kp.tag))));break}catch{}}if(!master)throw Error('Senha Aegis incorreta ou slot não compatível.');const params=data.header.params;const content=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:hexBytes(params.nonce),tagLength:128},await crypto.subtle.importKey('raw',master,'AES-GCM',false,['decrypt']),joinBytes(b64bytes(data.db),hexBytes(params.tag))));return JSON.parse(decoder.decode(content))}
+function promptPassword(label){return new Promise(resolve=>{const dialog=$('passwordDialog'),input=$('passwordInput');$('passwordHint').textContent=label;input.value='';const finish=value=>{dialog.close();input.value='';resolve(value)};$('passwordForm').onsubmit=e=>{e.preventDefault();finish(input.value)};$('passwordCancel').onclick=()=>finish(null);dialog.oncancel=e=>{e.preventDefault();finish(null)};dialog.showModal();input.focus()})}async function newPassphrase(label){const p=await promptPassword(label+'\nUse pelo menos 8 caracteres.');if(p===null)return null;if(p.length<8)throw Error('A senha precisa ter pelo menos 8 caracteres.');const q=await promptPassword('Confirme a senha.');if(q===null)return null;if(q!==p)throw Error('As senhas não coincidem.');return p}
+async function decryptAegis(data){if(data&&Array.isArray(data.entries))return data;if(data&&data.db&&typeof data.db==='object')return data.db;if(!data||typeof data.db!=='string'||!data.header)throw Error('Formato de backup Aegis inválido.');const slots=(Array.isArray(data.header.slots)?data.header.slots:[]).filter(x=>x&&x.type===1);if(slots.length>16)throw Error('Quantidade de slots inválida');for(const s of slots){if(!Number.isInteger(s.n)||s.n<2||s.n>262144||(s.n&(s.n-1))||!Number.isInteger(s.r)||s.r<1||s.r>32||!Number.isInteger(s.p)||s.p<1||s.p>16||128*s.n*s.r>268435456||s.n*s.r*s.p>8388608)throw Error('Parâmetros scrypt não suportados')}if(!slots.length)throw Error('O backup não tem slot de senha compatível (backup biométrico ou formato não suportado).');const password=await promptPassword('Senha de criptografia do backup Aegis:');if(password===null)throw Error('Importação cancelada.');let master=null;for(const slot of slots){try{const derived=await scrypt.scrypt(encoder.encode(password),hexBytes(slot.salt),slot.n,slot.r,slot.p,32);const wrapping=await crypto.subtle.importKey('raw',derived,'AES-GCM',false,['decrypt']);const kp=slot.key_params;master=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:hexBytes(kp.nonce),tagLength:128},wrapping,joinBytes(hexBytes(slot.key),hexBytes(kp.tag))));break}catch{}}if(!master)throw Error('Senha Aegis incorreta ou slot não compatível.');const params=data.header.params;const content=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:hexBytes(params.nonce),tagLength:128},await crypto.subtle.importKey('raw',master,'AES-GCM',false,['decrypt']),joinBytes(b64bytes(data.db),hexBytes(params.tag))));return JSON.parse(decoder.decode(content))}
 async function deriveConfigKey(password,salt,iterations){const material=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
 async function deriveLockKey(pin,salt){const material=await scrypt.scrypt(encoder.encode(pin),salt,32768,8,1,32);return crypto.subtle.importKey('raw',material,'AES-GCM',false,['encrypt','decrypt'])}
-function setLockUi(){const b=$('lockBtn'),manual=$('lockNowBtn');if(lockEnabled){b.textContent='Alterar senha';b.disabled=!!isLocked;manual.textContent=isLocked?'Destrancar':'Trancar';manual.disabled=false}else{b.textContent='Configurar senha';b.disabled=false;manual.textContent='Trancar';manual.disabled=true}for(const id of ['offsetBtn','importBtn','exportBackupBtn','importConfigBtn','exportConfigBtn'])$(id).disabled=!!(lockEnabled&&isLocked)}function showPinDialog(mode){lockMode=mode;const setup=mode==='setup',change=mode==='change';$('lockTitle').textContent=setup?'Configurar senha':change?'Alterar senha':'🔒 Códigos bloqueados';$('lockHint').textContent=setup?'Defina um PIN de 4 a 6 números. Prefira 6; ele será exigido ao abrir a página. Durante o uso, bloqueie o cofre pelo botão Trancar.':change?'Informe o PIN atual e escolha um novo PIN de 4 a 6 números.':'Códigos bloqueados. Informe o PIN para desbloquear.';$('lockPinLabel').textContent=change?'PIN atual':setup?'PIN de 4 a 6 dígitos':'PIN';$('lockPin').placeholder=setup?'4 a 6 números':'••••';$('newPinWrap').hidden=!change;$('confirmWrap').hidden=!(setup||change);$('lockSubmit').textContent=setup?'Configurar PIN':change?'Alterar PIN':'Destrancar';$('lockPin').autocomplete=setup?'new-password':'current-password';$('lockPin').value='';$('lockPinNew').value='';$('lockPinConfirm').value='';updatePinCount('lockPin','lockPinCount');updatePinCount('lockPinNew','lockPinNewCount');updatePinCount('lockPinConfirm','lockPinConfirmCount');$('lockError').textContent='';const dlg=$('lockDialog');dlg.classList.remove('modeless');if(dlg.open)dlg.close();dlg.showModal();setTimeout(()=>$('lockPin').focus(),50)}
-const SESSION_DB='totp-unlock-session-v1',SESSION_STORE='keys';function openSessionDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(SESSION_DB,1);req.onupgradeneeded=()=>req.result.createObjectStore(SESSION_STORE);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}async function setSessionKey(key){const db=await openSessionDb();await new Promise((resolve,reject)=>{const tx=db.transaction(SESSION_STORE,'readwrite');tx.objectStore(SESSION_STORE).put(key,'vault');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close();sessionStorage.setItem(SESSION_UNLOCKED,'1')}async function getSessionKey(){const db=await openSessionDb();const key=await new Promise((resolve,reject)=>{const tx=db.transaction(SESSION_STORE,'readonly'),req=tx.objectStore(SESSION_STORE).get('vault');req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)});db.close();return key}async function clearSessionKey(){sessionStorage.removeItem(SESSION_UNLOCKED);try{const db=await openSessionDb();await new Promise((resolve,reject)=>{const tx=db.transaction(SESSION_STORE,'readwrite');tx.objectStore(SESSION_STORE).delete('vault');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close()}catch{}}async function restoreSession(){try{if(sessionStorage.getItem(SESSION_UNLOCKED)!=='1')return false;const key=await getSessionKey(),env=JSON.parse(localStorage.getItem(STORE)||'null');if(!key||!env||env.format!=='totp-lock-v1')return false;const payload=JSON.parse(decoder.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(env.iv)},key,b64bytes(env.ciphertext))));entries=Array.isArray(payload.entries)&&payload.entries.length?validate(payload.entries):[];timeOffset=Number(payload.timeOffset)||0;lockCryptoKey=key;lockSalt=b64bytes(env.salt);isLocked=false;return true}catch{return false}}function lockNow(ask=true){if(!lockEnabled)return;void clearSessionKey();clearTimeout(idleTimer);isLocked=true;entries=[];timeOffset=0;lockCryptoKey=null;lockSalt=null;configPassphrase=null;render();setLockUi();if(ask)setTimeout(()=>showPinDialog('unlock'),80)}
-function resetIdle(){clearTimeout(idleTimer);idleTimer=null}
+function setLockUi(){$('removePinBtn').hidden=!lockEnabled;$('removePinBtn').disabled=isLocked;const b=$('lockBtn'),manual=$('lockNowBtn');if(lockEnabled){b.textContent='Alterar PIN';b.disabled=!!isLocked;manual.textContent=isLocked?'Destrancar':'Trancar';manual.disabled=false}else{b.textContent='Configurar PIN';b.disabled=false;manual.textContent='Trancar';manual.disabled=true}for(const id of ['offsetBtn','importBtn','exportBackupBtn','importConfigBtn','exportConfigBtn'])$(id).disabled=!!(lockEnabled&&isLocked)}function showPinDialog(mode){lockMode=mode;const setup=mode==='setup',change=mode==='change';$('lockTitle').textContent=setup?'Configurar PIN':change?'Alterar PIN':'PIN';$('lockHint').textContent=setup?'Defina um PIN de 4 a 6 números. Prefira 6; ele será exigido ao abrir a página. Durante o uso, bloqueie pelo botão Trancar. O bloqueio automático ocorre após 5 minutos sem interação.':change?'Informe o PIN atual e escolha um novo PIN de 4 a 6 números.':'Códigos bloqueados. Informe o PIN para desbloquear.';$('lockPinLabel').textContent=change?'PIN atual':'PIN';for(const id of ['lockPin','lockPinNew','lockPinConfirm'])$(id).placeholder='••••••';$('newPinWrap').hidden=!change;$('lockPinNew').disabled=!change;$('lockPinNew').required=change;$('lockPinConfirm').disabled=!(setup||change);$('lockPinConfirm').required=setup||change;$('confirmWrap').hidden=!(setup||change);$('lockSubmit').textContent=setup?'Configurar PIN':change?'Alterar PIN':'Destrancar';$('lockPin').autocomplete=setup?'new-password':'current-password';$('lockPin').value='';$('lockPinNew').value='';$('lockPinConfirm').value='';updatePinCount('lockPin','lockPinCount');updatePinCount('lockPinNew','lockPinNewCount');updatePinCount('lockPinConfirm','lockPinConfirmCount');$('lockError').textContent='';const dlg=$('lockDialog');dlg.classList.remove('modeless');if(dlg.open)dlg.close();dlg.showModal();setTimeout(()=>$('lockPin').focus(),50)}
+async function clearSessionKey(){try{sessionStorage.removeItem(SESSION_UNLOCKED);await new Promise(resolve=>{const r=indexedDB.deleteDatabase('totp-unlock-session-v1');r.onsuccess=r.onerror=r.onblocked=resolve})}catch{}}
+async function setSessionKey(){await clearSessionKey()}
+async function restoreSession(){await clearSessionKey();return false}
+function lockNow(ask=true){if(!lockEnabled||operationBusy)return;tickGeneration++;for(const d of document.querySelectorAll('dialog[open]'))d.close();$('noteText').textContent='';for(const id of ['lockPin','lockPinNew','lockPinConfirm','passwordInput'])$(id).value='';void clearSessionKey();clearTimeout(idleTimer);isLocked=true;entries=[];committedEntries=[];committedOffset=0;timeOffset=0;lockCryptoKey=null;lockSalt=null;configPassphrase=null;render();setLockUi();if(ask)setTimeout(()=>showPinDialog('unlock'),80)}
+const IDLE_MS=5*60*1000;let lastInteraction=Date.now();function resetIdle(){lastInteraction=Date.now();clearTimeout(idleTimer);idleTimer=null;if(lockEnabled&&!isLocked)idleTimer=setTimeout(checkIdle,IDLE_MS)}function checkIdle(){clearTimeout(idleTimer);if(!lockEnabled||isLocked)return;const remaining=IDLE_MS-(Date.now()-lastInteraction);if(remaining<=0){if(operationBusy){idleTimer=setTimeout(checkIdle,1000);return}lockNow(false);say('Códigos trancados após 5 minutos sem interação.')}else idleTimer=setTimeout(checkIdle,remaining)}for(const event of ['pointerdown','keydown','input','wheel'])document.addEventListener(event,resetIdle,{passive:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkIdle()});
 async function unlockFromEnvelope(pin){const env=JSON.parse(localStorage.getItem(STORE)||'null');if(!env||env.format!=='totp-lock-v1')throw Error('Armazenamento protegido ausente ou inválido.');const salt=b64bytes(env.salt),key=await deriveLockKey(pin,salt);let payload;try{payload=JSON.parse(decoder.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(env.iv)},key,b64bytes(env.ciphertext))))}catch{throw Error('PIN incorreto.')}const next=Array.isArray(payload.entries)&&payload.entries.length?validate(payload.entries):[];return {next,offset:Number(payload.timeOffset)||0,key,salt}}
-$('lockBtn').onclick=()=>showPinDialog(lockEnabled?(isLocked?'unlock':'change'):'setup');$('lockNowBtn').onclick=()=>{if(!lockEnabled)return;if(isLocked)showPinDialog('unlock');else lockNow(false)};bindPinCount('lockPin','lockPinCount');bindPinCount('lockPinNew','lockPinNewCount');bindPinCount('lockPinConfirm','lockPinConfirmCount');$('lockCloseBtn').onclick=()=>$('lockDialog').close();$('lockForm').onsubmit=async e=>{e.preventDefault();const current=$('lockPin').value;try{if(!/^\d{4,6}$/.test(current))throw Error('O PIN precisa ter de 4 a 6 dígitos.');if(lockMode==='setup'){const confirm=$('lockPinConfirm').value;if(current!==confirm)throw Error('Os PINs não coincidem.');const salt=crypto.getRandomValues(new Uint8Array(32));lockSalt=salt;lockCryptoKey=await deriveLockKey(current,salt);lockEnabled=true;isLocked=false;await save();localStorage.setItem(LOCK_FLAG,'1');await setSessionKey(lockCryptoKey);$('lockDialog').close();setLockUi();render();resetIdle();say('Bloqueio configurado. Os dados locais agora ficam criptografados.')}else if(lockMode==='change'){const newPin=$('lockPinNew').value,confirm=$('lockPinConfirm').value;if(!/^\d{4,6}$/.test(newPin))throw Error('O novo PIN precisa ter de 4 a 6 dígitos.');if(newPin!==confirm)throw Error('Os novos PINs não coincidem.');await unlockFromEnvelope(current);const oldKey=lockCryptoKey,oldSalt=lockSalt,newSalt=crypto.getRandomValues(new Uint8Array(32));try{lockSalt=newSalt;lockCryptoKey=await deriveLockKey(newPin,newSalt);await save();await setSessionKey(lockCryptoKey)}catch(err){lockCryptoKey=oldKey;lockSalt=oldSalt;throw err}$('lockDialog').close();setLockUi();resetIdle();say('PIN alterado.')}else{const unlocked=await unlockFromEnvelope(current);entries=unlocked.next;timeOffset=unlocked.offset;lockCryptoKey=unlocked.key;lockSalt=unlocked.salt;isLocked=false;await setSessionKey(lockCryptoKey);$('lockDialog').close();setLockUi();render();resetIdle();say('Página desbloqueada.')}}catch(err){$('lockError').textContent=err.message;$('lockPin').value='';updatePinCount('lockPin','lockPinCount');if(lockMode==='change'){$('lockPinNew').value='';$('lockPinConfirm').value='';updatePinCount('lockPinNew','lockPinNewCount');updatePinCount('lockPinConfirm','lockPinConfirmCount')}$('lockPin').focus()}};async function saveConfigPasswordVerifier(pass){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iterations=310000,key=await deriveConfigKey(pass,salt,iterations),marker='TOTP-CONFIG-PASSWORD-VERIFIER-v1',ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(marker));localStorage.setItem(CONFIG_PASS_KEY,JSON.stringify({salt:bytes64(salt),iv:bytes64(iv),ciphertext:bytes64(ciphertext),iterations}))}
-async function verifyConfigPassword(pass){try{const v=JSON.parse(localStorage.getItem(CONFIG_PASS_KEY)||'null');if(!v)return false;const key=await deriveConfigKey(pass,b64bytes(v.salt),Number(v.iterations)||310000),clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(v.iv)},key,b64bytes(v.ciphertext));return decoder.decode(clear)==='TOTP-CONFIG-PASSWORD-VERIFIER-v1'}catch{return false}}async function exportConfig(){try{if(!localStorage.getItem(CONFIG_PASS_KEY)){let initial=configPassphrase;if(!initial)initial=promptPassword('Digite a senha de configuração que definiu ao importar o backup Aegis. Se não lembrar, reimporte o backup para definir uma nova.');if(!initial)return;await saveConfigPasswordVerifier(initial);configPassphrase=initial}const pass=promptPassword('Digite a senha de configuração definida ao importar o backup Aegis:');if(pass===null)return;if(!await verifyConfigPassword(pass))throw Error('Senha de configuração incorreta.');configPassphrase=pass;const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iterations=310000,key=await deriveConfigKey(pass,salt,iterations),payload={version:1,timeOffset,entries},ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(JSON.stringify(payload)));downloadJson({format:'totp-local-config',version:1,kdf:'PBKDF2-SHA256',iterations,salt:bytes64(salt),iv:bytes64(iv),ciphertext:bytes64(ciphertext)},'configuracao-totp-criptografada.json');say('Configuração exportada e criptografada.')}catch(e){say('Falha ao exportar configuração: '+e.message)}}async function importConfig(file){try{const env=JSON.parse(await file.text());if(env.format!=='totp-local-config'||env.version!==1)throw Error('Arquivo de configuração não reconhecido.');const pass=promptPassword('Senha de abertura da configuração:');if(pass===null)return;const iterations=Math.max(100000,Math.min(1000000,Number(env.iterations)||310000));const key=await deriveConfigKey(pass,b64bytes(env.salt),iterations);let payload;try{payload=JSON.parse(decoder.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(env.iv)},key,b64bytes(env.ciphertext))))}catch{throw Error('Senha incorreta ou arquivo danificado.')}const next=validate(payload.entries);configPassphrase=pass;await saveConfigPasswordVerifier(pass);entries=next;timeOffset=Math.max(-300,Math.min(300,Math.trunc(Number(payload.timeOffset)||0)));await save();setLockUi();render();say('Configuração aberta: códigos, ordem e ajuste restaurados.')}catch(e){say('Falha ao importar configuração: '+e.message)}}
-async function exportAegis(){try{if(!entries.length)throw Error('Importe ou adicione um backup antes de exportar.');const pass=newPassphrase('Defina a senha do backup criptografado compatível com Aegis.');if(!pass)return;const master=crypto.getRandomValues(new Uint8Array(32)),content={version:3,entries:entries.map(e=>({type:e.type==='steam'?'steam':'totp',uuid:uuid(),name:e.name,issuer:e.issuer,note:e.note||'',icon:null,icon_mime:null,icon_hash:null,favorite:false,info:{secret:e.secret,algo:e.algo,digits:e.digits,period:e.period},groups:[]})),groups:[]};const dataNonce=crypto.getRandomValues(new Uint8Array(12));const masterKey=await crypto.subtle.importKey('raw',master,'AES-GCM',false,['encrypt']);const encryptedDb=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:dataNonce},masterKey,encoder.encode(JSON.stringify(content))));const slotSalt=crypto.getRandomValues(new Uint8Array(32)),slotNonce=crypto.getRandomValues(new Uint8Array(12));const derived=await scrypt.scrypt(encoder.encode(pass),slotSalt,32768,8,1,32);const wrapKey=await crypto.subtle.importKey('raw',derived,'AES-GCM',false,['encrypt']);const wrapped=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:slotNonce},wrapKey,master));const slot={type:1,uuid:uuid(),key:hex(wrapped.slice(0,32)),key_params:{nonce:hex(slotNonce),tag:hex(wrapped.slice(32))},n:32768,r:8,p:1,salt:hex(slotSalt)};const out={version:1,header:{slots:[slot],params:{nonce:hex(dataNonce),tag:hex(encryptedDb.slice(-16))}},db:bytes64(encryptedDb.slice(0,-16))};downloadJson(out,'backup-aegis-criptografado.json');say('Backup Aegis criptografado exportado.')}catch(e){say('Falha ao exportar backup: '+e.message)}}function formatCode(value,entry){return entry.type==='steam'?value:/^\d+$/.test(value)?value.match(/.{1,3}/g).join(' '):value}
+$('lockBtn').onclick=()=>showPinDialog(lockEnabled?(isLocked?'unlock':'change'):'setup');$('lockNowBtn').onclick=()=>{if(!lockEnabled)return;if(isLocked)showPinDialog('unlock');else lockNow(false)};bindPinCount('lockPin','lockPinCount');bindPinCount('lockPinNew','lockPinNewCount');bindPinCount('lockPinConfirm','lockPinConfirmCount');$('lockCloseBtn').onclick=()=>$('lockDialog').close();$('lockForm').onsubmit=async e=>{e.preventDefault();const current=$('lockPin').value;try{if(!/^\d{4,6}$/.test(current))throw Error('O PIN precisa ter de 4 a 6 dígitos.');if(lockMode==='setup'){const confirm=$('lockPinConfirm').value;if(current!==confirm)throw Error('Os PINs não coincidem.');const salt=crypto.getRandomValues(new Uint8Array(32));lockSalt=salt;lockCryptoKey=await deriveLockKey(current,salt);lockEnabled=true;isLocked=false;try{await save()}catch(error){lockEnabled=false;isLocked=false;lockCryptoKey=null;lockSalt=null;throw error}localStorage.setItem(LOCK_FLAG,'1');await setSessionKey(lockCryptoKey);$('lockDialog').close();setLockUi();render();resetIdle();say('Bloqueio configurado. Os dados locais agora ficam criptografados.')}else if(lockMode==='change'){const newPin=$('lockPinNew').value,confirm=$('lockPinConfirm').value;if(!/^\d{4,6}$/.test(newPin))throw Error('O novo PIN precisa ter de 4 a 6 dígitos.');if(newPin!==confirm)throw Error('Os novos PINs não coincidem.');await unlockFromEnvelope(current);const oldKey=lockCryptoKey,oldSalt=lockSalt,newSalt=crypto.getRandomValues(new Uint8Array(32));try{lockSalt=newSalt;lockCryptoKey=await deriveLockKey(newPin,newSalt);await save();await setSessionKey(lockCryptoKey)}catch(err){lockCryptoKey=oldKey;lockSalt=oldSalt;throw err}$('lockDialog').close();setLockUi();resetIdle();say('PIN alterado.')}else{const unlocked=await unlockFromEnvelope(current);entries=unlocked.next;timeOffset=unlocked.offset;lockCryptoKey=unlocked.key;lockSalt=unlocked.salt;isLocked=false;committedEntries=entries.slice();committedOffset=timeOffset;await setSessionKey(lockCryptoKey);$('lockDialog').close();setLockUi();render();resetIdle();say('Página desbloqueada.')}}catch(err){$('lockError').textContent=err.message;$('lockPin').value='';updatePinCount('lockPin','lockPinCount');if(lockMode==='change'){$('lockPinNew').value='';$('lockPinConfirm').value='';updatePinCount('lockPinNew','lockPinNewCount');updatePinCount('lockPinConfirm','lockPinConfirmCount')}$('lockPin').focus()}};async function saveConfigPasswordVerifier(pass){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iterations=310000,key=await deriveConfigKey(pass,salt,iterations),marker='TOTP-CONFIG-PASSWORD-VERIFIER-v1',ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(marker));localStorage.setItem(CONFIG_PASS_KEY,JSON.stringify({salt:bytes64(salt),iv:bytes64(iv),ciphertext:bytes64(ciphertext),iterations}))}
+async function verifyConfigPassword(pass){try{const v=JSON.parse(localStorage.getItem(CONFIG_PASS_KEY)||'null');if(!v)return false;const key=await deriveConfigKey(pass,b64bytes(v.salt),Number(v.iterations)||310000),clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(v.iv)},key,b64bytes(v.ciphertext));return decoder.decode(clear)==='TOTP-CONFIG-PASSWORD-VERIFIER-v1'}catch{return false}}async function exportConfig(){try{if(!localStorage.getItem(CONFIG_PASS_KEY)){let initial=configPassphrase;if(!initial)initial=await newPassphrase('Defina uma senha para proteger a configuração exportada.');if(!initial)return;await saveConfigPasswordVerifier(initial);configPassphrase=initial}const pass=await promptPassword('Digite a senha da configuração:');if(pass===null)return;if(!await verifyConfigPassword(pass))throw Error('Senha de configuração incorreta.');configPassphrase=pass;const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iterations=310000,key=await deriveConfigKey(pass,salt,iterations),payload={version:1,timeOffset,entries,appearance,pinProtection:lockEnabled?JSON.parse(localStorage.getItem(STORE)):null},ciphertext=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(JSON.stringify(payload)));downloadJson({format:'totp-local-config',version:1,kdf:'PBKDF2-SHA256',iterations,salt:bytes64(salt),iv:bytes64(iv),ciphertext:bytes64(ciphertext)},'configuracao-totp-criptografada.json');say('Configuração exportada e criptografada.')}catch(e){say('Falha ao exportar configuração: '+e.message)}}async function importConfig(file){try{const env=JSON.parse(await readJsonFile(file));if(env.format!=='totp-local-config'||env.version!==1)throw Error('Arquivo de configuração não reconhecido.');const pass=await promptPassword('Senha de abertura da configuração:');if(pass===null)return;const iterations=Math.max(100000,Math.min(1000000,Number(env.iterations)||310000));const key=await deriveConfigKey(pass,b64bytes(env.salt),iterations);let payload;try{payload=JSON.parse(decoder.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(env.iv)},key,b64bytes(env.ciphertext))))}catch{throw Error('Senha incorreta ou arquivo danificado.')}let importedPin=null;if(payload.pinProtection){const env=payload.pinProtection;if(env.format!=='totp-lock-v1'||b64bytes(env.salt).length!==32||b64bytes(env.iv).length!==12)throw Error('Proteção por PIN inválida');const pin=await promptPassword('PIN da configuração importada:');if(pin===null)return;if(!/^\d{4,6}$/.test(pin))throw Error('PIN inválido');const salt=b64bytes(env.salt),key=await deriveLockKey(pin,salt);try{await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(env.iv)},key,b64bytes(env.ciphertext))}catch{throw Error('PIN incorreto')}importedPin={key,salt}}
+const next=Array.isArray(payload.entries)&&payload.entries.length===0?[]:validate(payload.entries);configPassphrase=pass;await saveConfigPasswordVerifier(pass);if(Object.hasOwn(payload,'pinProtection')){lockEnabled=!!importedPin;lockCryptoKey=importedPin?.key||null;lockSalt=importedPin?.salt||null;isLocked=false}entries=next;timeOffset=Math.max(-300,Math.min(300,Math.trunc(Number(payload.timeOffset)||0)));await save();if(lockEnabled)localStorage.setItem(LOCK_FLAG,'1');else localStorage.removeItem(LOCK_FLAG);resetIdle();if(payload.appearance){appearance=validateAppearance(payload.appearance);saveAppearance()}setLockUi();render();say('Configuração aberta: códigos, ordem, ajuste e aparência restaurados.')}catch(e){say('Falha ao importar configuração: '+e.message)}}
+async function exportAegis(){try{if(!entries.length)throw Error('Importe ou adicione um backup antes de exportar.');const pass=await newPassphrase('Defina a senha do backup criptografado compatível com Aegis.');if(!pass)return;const master=crypto.getRandomValues(new Uint8Array(32)),content={version:3,entries:entries.map(e=>({type:e.type==='steam'?'steam':'totp',uuid:uuid(),name:e.name,issuer:e.issuer,note:e.note||'',icon:null,icon_mime:null,icon_hash:null,favorite:false,info:{secret:e.secret,algo:e.algo,digits:e.digits,period:e.period},groups:[]})),groups:[]};const dataNonce=crypto.getRandomValues(new Uint8Array(12));const masterKey=await crypto.subtle.importKey('raw',master,'AES-GCM',false,['encrypt']);const encryptedDb=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:dataNonce},masterKey,encoder.encode(JSON.stringify(content))));const slotSalt=crypto.getRandomValues(new Uint8Array(32)),slotNonce=crypto.getRandomValues(new Uint8Array(12));const derived=await scrypt.scrypt(encoder.encode(pass),slotSalt,32768,8,1,32);const wrapKey=await crypto.subtle.importKey('raw',derived,'AES-GCM',false,['encrypt']);const wrapped=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv:slotNonce},wrapKey,master));const slot={type:1,uuid:uuid(),key:hex(wrapped.slice(0,32)),key_params:{nonce:hex(slotNonce),tag:hex(wrapped.slice(32))},n:32768,r:8,p:1,salt:hex(slotSalt)};const out={version:1,header:{slots:[slot],params:{nonce:hex(dataNonce),tag:hex(encryptedDb.slice(-16))}},db:bytes64(encryptedDb.slice(0,-16))};downloadJson(out,'backup-aegis-criptografado.json');say('Backup Aegis criptografado exportado.')}catch(e){say('Falha ao exportar backup: '+e.message)}}function formatCode(value,entry){return entry.type==='steam'?value:/^\d+$/.test(value)?value.match(/.{1,3}/g).join(' '):value}
 function updatePinCount(inputId,countId){const field=$(inputId),count=$(countId);if(field&&count)count.textContent=field.value.length+'/6 dígitos'}
 function bindPinCount(inputId,countId){const field=$(inputId);if(!field)return;field.addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,6);updatePinCount(inputId,countId)})}
-async function performUnlock(pin){const unlocked=await unlockFromEnvelope(pin);entries=unlocked.next;timeOffset=unlocked.offset;lockCryptoKey=unlocked.key;lockSalt=unlocked.salt;isLocked=false;await setSessionKey(lockCryptoKey);if($('lockDialog').open)$('lockDialog').close();setLockUi();render();resetIdle();say('Página desbloqueada.')}function render(){const grid=$('grid');grid.replaceChildren();if(lockEnabled&&isLocked){const locked=document.createElement('div');locked.className='locked-state';locked.innerHTML='<div class="lock-mark" aria-hidden="true">🔒</div><strong>Códigos bloqueados.</strong><p>Informe o PIN para desbloquear.</p><form id="inlineUnlockForm"><input id="inlinePin" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••" aria-label="PIN de 4 a 6 dígitos" required><small class="pin-count" id="inlinePinCount">0/6 dígitos</small><small id="inlinePinError" role="status"></small><button class="primary" type="submit">Destrancar</button></form>';grid.append(locked);bindPinCount('inlinePin','inlinePinCount');$('inlineUnlockForm').onsubmit=async ev=>{ev.preventDefault();const pin=$('inlinePin').value;try{if(!/^\d{4,6}$/.test(pin))throw Error('Informe um PIN de 4 a 6 dígitos.');await performUnlock(pin)}catch(err){$('inlinePinError').textContent=err.message;$('inlinePin').value='';updatePinCount('inlinePin','inlinePinCount')}};return}if(!entries.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='Importe um backup JSON do Aegis para começar.';grid.append(empty);return}for(const [i,e] of entries.entries()){const card=document.createElement('article');card.className='card';card.draggable=true;card.dataset.index=String(i);card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',String(i));e.dataTransfer.effectAllowed='move'});card.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move'});card.addEventListener('drop',e=>{e.preventDefault();const from=Number(e.dataTransfer.getData('text/plain')),to=Number(card.dataset.index);if(Number.isInteger(from)&&from!==to){const [moved]=entries.splice(from,1);entries.splice(to,0,moved);save().then(render).catch(e=>say('Falha ao salvar ordem: '+e.message))}});const top=document.createElement('div');top.className='card-top';const icon=document.createElement('div');icon.className='icon';icon.textContent=String(i+1);const account=document.createElement('div');account.className='account';const title=document.createElement('strong');title.textContent=e.issuer||e.name;const sub=document.createElement('small');sub.textContent=e.issuer&&e.name!==e.issuer?e.name:'TOTP';account.append(title,sub);top.append(icon,account);const current=document.createElement('div');current.className='current-code';current.id='code-'+i;current.textContent='••• •••';const nextline=document.createElement('div');nextline.className='next-line';nextline.append(document.createTextNode('Próximo'));const next=document.createElement('span');next.className='next-code';next.id='next-'+i;next.textContent='••• •••';nextline.append(next);const buttons=document.createElement('div');buttons.className='card-buttons';const copy=document.createElement('button');copy.type='button';copy.textContent='Copiar';copy.setAttribute('aria-label','Copiar código');copy.title='Copiar código';copy.onclick=()=>copyCode(e,false);const copyNext=document.createElement('button');copyNext.type='button';copyNext.textContent='Próximo';copyNext.onclick=()=>copyCode(e,true);buttons.append(copy,copyNext);{const noteBtn=document.createElement('button');noteBtn.type='button';noteBtn.textContent='Descrição';noteBtn.disabled=!(e.note&&e.note.trim());noteBtn.title=noteBtn.disabled?'Sem observação cadastrada':'';noteBtn.onclick=()=>{$('noteTitle').textContent=e.issuer||e.name;$('noteText').textContent=e.note;$('noteDialog').showModal()};buttons.append(noteBtn)}const progress=document.createElement('div');progress.className='progress';const bar=document.createElement('span');bar.id='bar-'+i;progress.append(bar);card.append(top,current,nextline,buttons,progress);grid.append(card)}tick()}
-async function copyCode(e,next){try{if(lockEnabled&&isLocked)throw Error('Página bloqueada.');const now=Date.now()+timeOffset*1000;const step=Math.floor(now/1000/e.period);const value=await totp(e,next?(step+1)*e.period*1000:now);if(lockEnabled&&isLocked)throw Error('Página bloqueada.');await navigator.clipboard.writeText(value);say((next?'Próximo código':'Código')+' copiado.')}catch(err){say('Não foi possível copiar o código: '+err.message)}}async function tick(){if(lockEnabled&&isLocked)return;const now=Date.now()+timeOffset*1000;$('clock').textContent=new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date(now));for(let i=0;i<entries.length;i++){try{const step=Math.floor(now/1000/entries[i].period);const current=await totp(entries[i],now);if(lockEnabled&&isLocked)return;const following=await totp(entries[i],(step+1)*entries[i].period*1000);if(lockEnabled&&isLocked)return;const el=$('code-'+i),nx=$('next-'+i),bar=$('bar-'+i);if(!el||!nx||!bar)return;el.textContent=formatCode(current,entries[i]);nx.textContent=formatCode(following,entries[i]);const left=entries[i].period-(Math.floor(now/1000)%entries[i].period);bar.style.width=(left/entries[i].period*100)+'%'}catch{if(lockEnabled&&isLocked)return;const target=$('code-'+i);if(target)target.textContent='Erro'}}}$('offsetBtn').onclick=()=>{if(lockEnabled&&isLocked)return;$('offsetInput').value=timeOffset;$('offsetDialog').showModal()};$('offsetForm').onsubmit=async e=>{e.preventDefault();timeOffset=Math.max(-300,Math.min(300,Math.trunc(Number($('offsetInput').value)||0)));try{await save();$('offsetDialog').close();tick();say('Ajuste salvo: '+(timeOffset>=0?'+':'')+timeOffset+' segundos.')}catch(err){say('Falha ao salvar ajuste: '+err.message)}};document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
-$('importBtn').onclick=()=>$('file').click();$('file').onchange=async ev=>{const file=ev.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());const db=await decryptAegis(data);entries=validate(extract(db));await save();render();say(entries.length+' contas importadas do Aegis.');try{configPassphrase=newPassphrase('Defina a senha de configuração (diferente da senha do backup Aegis).');if(configPassphrase)await saveConfigPasswordVerifier(configPassphrase)}catch(err){configPassphrase=null;say(err.message)}}catch(err){say('Falha ao importar backup: '+err.message)}finally{ev.target.value=''}};
+async function performUnlock(pin){const unlocked=await unlockFromEnvelope(pin);entries=unlocked.next;timeOffset=unlocked.offset;lockCryptoKey=unlocked.key;lockSalt=unlocked.salt;isLocked=false;committedEntries=entries.slice();committedOffset=timeOffset;await setSessionKey(lockCryptoKey);if($('lockDialog').open)$('lockDialog').close();setLockUi();render();resetIdle();say('Página desbloqueada.')}let tickGeneration=0;function render(){tickGeneration++;const grid=$('grid');grid.replaceChildren();if(lockEnabled&&isLocked){const locked=document.createElement('div');locked.className='locked-state';locked.innerHTML='<div class="lock-mark" aria-hidden="true">🔒</div><strong>Códigos bloqueados.</strong><p>Informe o PIN para desbloquear.</p><form id="inlineUnlockForm"><input id="inlinePin" type="password" inputmode="numeric" enterkeyhint="done" pattern="[0-9]{4,6}" minlength="4" maxlength="6" placeholder="••••" aria-label="PIN de 4 a 6 dígitos" required><small class="pin-count" id="inlinePinCount">0/6 dígitos</small><small id="inlinePinError" role="status"></small><button class="primary" type="submit">Destrancar</button></form>';grid.append(locked);bindPinCount('inlinePin','inlinePinCount');$('inlineUnlockForm').onsubmit=async ev=>{ev.preventDefault();const pin=$('inlinePin').value;try{if(!/^\d{4,6}$/.test(pin))throw Error('Informe um PIN de 4 a 6 dígitos.');await performUnlock(pin)}catch(err){$('inlinePinError').textContent=err.message;$('inlinePin').value='';updatePinCount('inlinePin','inlinePinCount')}};return}if(!entries.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='Importe um backup JSON do Aegis para começar.';grid.append(empty);return}for(const [i,e] of entries.entries()){const card=document.createElement('article');card.className='card';card.draggable=true;card.dataset.index=String(i);card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',String(i));e.dataTransfer.effectAllowed='move'});card.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move'});card.addEventListener('drop',e=>{e.preventDefault();if(operationBusy)return;const raw=e.dataTransfer.getData('text/plain');if(!/^\d+$/.test(raw))return;const from=Number(raw),to=Number(card.dataset.index);if(Number.isInteger(from)&&from>=0&&from<entries.length&&from!==to){const [moved]=entries.splice(from,1);entries.splice(to,0,moved);save().then(render).catch(e=>say('Falha ao salvar ordem: '+e.message))}});const top=document.createElement('div');top.className='card-top';const icon=document.createElement('div');icon.className='icon';icon.textContent=String(i+1);const account=document.createElement('div');account.className='account';const title=document.createElement('strong');title.textContent=e.issuer||e.name;const sub=document.createElement('small');sub.textContent=e.issuer&&e.name!==e.issuer?e.name:'TOTP';account.append(title,sub);top.append(icon,account);const current=document.createElement('div');current.className='current-code';current.id='code-'+i;current.textContent='••• •••';const nextline=document.createElement('div');nextline.className='next-line';nextline.append(document.createTextNode('Próximo'));const next=document.createElement('span');next.className='next-code';next.id='next-'+i;next.textContent='••• •••';nextline.append(next);const buttons=document.createElement('div');buttons.className='card-buttons';const copy=document.createElement('button');copy.type='button';copy.textContent='Copiar';copy.setAttribute('aria-label','Copiar código');copy.title='Copiar código';copy.onclick=()=>copyCode(e,false);const copyNext=document.createElement('button');copyNext.type='button';copyNext.textContent='Próximo';copyNext.onclick=()=>copyCode(e,true);buttons.append(copy,copyNext);{const noteBtn=document.createElement('button');noteBtn.type='button';noteBtn.textContent='Descrição';noteBtn.disabled=!(e.note&&e.note.trim());noteBtn.title=noteBtn.disabled?'Sem observação cadastrada':'';noteBtn.onclick=()=>{$('noteTitle').textContent=e.issuer||e.name;$('noteText').textContent=e.note;$('noteDialog').showModal()};buttons.append(noteBtn)}const progress=document.createElement('div');progress.className='progress';const bar=document.createElement('span');bar.id='bar-'+i;progress.append(bar);card.append(top,current,nextline,buttons,progress);grid.append(card)}tick()}
+async function copyCode(e,next){try{if(lockEnabled&&isLocked)throw Error('Página bloqueada.');const now=Date.now()+timeOffset*1000;const step=Math.floor(now/1000/e.period);const value=await totp(e,next?(step+1)*e.period*1000:now);if(lockEnabled&&isLocked)throw Error('Página bloqueada.');await navigator.clipboard.writeText(value);say((next?'Próximo código':'Código')+' copiado.')}catch(err){say('Não foi possível copiar o código: '+err.message)}}async function tick(){const generation=++tickGeneration,now=Date.now()+timeOffset*1000;$('clock').textContent=new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:appearance.clock24h?'h23':'h12'}).format(new Date(now));if(lockEnabled&&isLocked)return;const snapshot=entries.slice();for(let i=0;i<snapshot.length;i++){const entry=snapshot[i];try{const step=Math.floor(now/1000/entry.period);const [current,following]=await Promise.all([totp(entry,now),totp(entry,(step+1)*entry.period*1000)]);if(generation!==tickGeneration||lockEnabled&&isLocked||entries[i]!==entry)return;const el=$('code-'+i),nx=$('next-'+i),bar=$('bar-'+i);if(!el||!nx||!bar)return;el.textContent=formatCode(current,entry);nx.textContent=formatCode(following,entry);bar.style.width=((entry.period-(now/1000%entry.period))/entry.period*100)+'%'}catch{if(generation!==tickGeneration)return;const el=$('code-'+i);if(el)el.textContent='Erro'}}}
+$('offsetBtn').onclick=()=>{if(lockEnabled&&isLocked)return;$('offsetInput').value=timeOffset;$('offsetDialog').showModal()};$('offsetForm').onsubmit=async e=>{e.preventDefault();timeOffset=Math.max(-300,Math.min(300,Math.trunc(Number($('offsetInput').value)||0)));try{await save();$('offsetDialog').close();tick();say('Ajuste salvo: '+(timeOffset>=0?'+':'')+timeOffset+' segundos.')}catch(err){say('Falha ao salvar ajuste: '+err.message)}};document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
+$('importBtn').onclick=()=>$('file').click();$('file').onchange=async ev=>{const file=ev.target.files[0];if(!file)return;try{const data=JSON.parse(await readJsonFile(file));const db=await decryptAegis(data);entries=validate(extract(db));await save();render();say(entries.length+' contas importadas do Aegis.');try{configPassphrase=await newPassphrase('Defina a senha de configuração (diferente da senha do backup Aegis).');if(configPassphrase)await saveConfigPasswordVerifier(configPassphrase)}catch(err){configPassphrase=null;say(err.message)}}catch(err){say('Falha ao importar backup: '+err.message)}finally{ev.target.value=''}};
 $('exportBackupBtn').onclick=exportAegis;$('exportConfigBtn').onclick=exportConfig;$('importConfigBtn').onclick=()=>$('configFile').click();$('configFile').onchange=async ev=>{const file=ev.target.files[0];if(!file)return;await importConfig(file);ev.target.value=''};
-$('clearBtn').onclick=()=>{if(confirm('Apagar tudo deste navegador, inclusive contas, PIN de bloqueio e ajustes? Esta ação não pode ser desfeita.')){clearTimeout(idleTimer);localStorage.removeItem(STORE);localStorage.removeItem(OFFSET_STORE);localStorage.removeItem(LOCK_FLAG);localStorage.removeItem(CONFIG_PASS_KEY);entries=[];timeOffset=0;lockEnabled=false;isLocked=false;lockCryptoKey=null;lockSalt=null;configPassphrase=null;location.reload()}};let saved=null;try{saved=JSON.parse(localStorage.getItem(STORE)||'null')}catch{}if(saved&&saved.format==='totp-lock-v1'){lockEnabled=true;isLocked=true;timeOffset=0;localStorage.setItem(LOCK_FLAG,'1')}else if(lockEnabled){entries=[];timeOffset=0}else if(Array.isArray(saved)){entries=saved;timeOffset=Number(localStorage.getItem(OFFSET_STORE)||0)}setLockUi();render();if(lockEnabled){if(saved&&saved.format==='totp-lock-v1'){restoreSession().then(ok=>{if(ok){setLockUi();render();tick()}else{sessionStorage.removeItem(SESSION_UNLOCKED);showPinDialog('unlock')}})}else say('Armazenamento protegido ausente ou inválido.')}else if(entries.length===0)timeOffset=Number(localStorage.getItem(OFFSET_STORE)||0);
-render();setInterval(tick,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});</script></body></html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$('clearBtn').onclick=()=>{if(confirm('Apagar tudo deste navegador, inclusive contas, PIN de bloqueio e ajustes? Esta ação não pode ser desfeita.')){clearTimeout(idleTimer);void clearSessionKey();localStorage.removeItem(STORE);localStorage.removeItem(OFFSET_STORE);localStorage.removeItem(LOCK_FLAG);localStorage.removeItem(CONFIG_PASS_KEY);entries=[];timeOffset=0;lockEnabled=false;isLocked=false;lockCryptoKey=null;lockSalt=null;configPassphrase=null;location.reload()}};let saved=null;try{saved=JSON.parse(localStorage.getItem(STORE)||'null');if(saved&&saved.format==='totp-lock-v1'){lockEnabled=true;isLocked=true;timeOffset=0}else if(lockEnabled){entries=[];timeOffset=0;say('Armazenamento protegido ausente ou inválido.')}else if(Array.isArray(saved)){entries=saved.length?validate(saved):[];timeOffset=Math.max(-300,Math.min(300,Math.trunc(Number(localStorage.getItem(OFFSET_STORE))||0)))}}catch{entries=[];say('Não foi possível ler os dados locais. Importe um backup válido.')}void clearSessionKey();setLockUi();
+setInterval(tick,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
+const APPEARANCE_KEY='pmx-totp-appearance-v1';
+function validateAppearance(v){return {clock24h:v?.clock24h!==false,accent:/^#[0-9a-f]{6}$/i.test(v?.accent)?v.accent:'#DC582A',background:/^#[0-9a-f]{6}$/i.test(v?.background)?v.background:'#1F2A44',amoled:typeof v?.amoled==='boolean'?v.amoled:true}}
+let appearance=validateAppearance(null);try{appearance=validateAppearance(JSON.parse(localStorage.getItem(APPEARANCE_KEY)))}catch{}
+function applyAppearance(){const bg=appearance.amoled?'#000000':appearance.background;document.documentElement.style.setProperty('--accent',appearance.accent);document.documentElement.style.setProperty('--bg',bg);const light=hex=>{const c=hex.slice(1).match(/../g).map(x=>{const v=parseInt(x,16)/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722>.179};document.documentElement.style.setProperty('--ink',light(bg)?'#111111':'#FFFFFF');document.documentElement.style.setProperty('--muted',light(bg)?'#333333':'#D5D5D5');document.documentElement.style.setProperty('--accent-ink',light(appearance.accent)?'#000000':'#FFFFFF');document.querySelector('meta[name="theme-color"]').content=bg}
+function saveAppearance(){applyAppearance();localStorage.setItem(APPEARANCE_KEY,JSON.stringify(appearance))}
+$('appearanceBtn').onclick=()=>{$('clockFormat').value=appearance.clock24h?'24':'12';$('accentInput').value=appearance.accent;$('backgroundInput').value=appearance.background;$('amoledInput').checked=appearance.amoled;$('backgroundInput').disabled=appearance.amoled;$('appearanceDialog').showModal()};$('amoledInput').onchange=()=>{$('backgroundInput').disabled=$('amoledInput').checked};$('appearanceForm').onsubmit=e=>{e.preventDefault();appearance=validateAppearance({clock24h:$('clockFormat').value==='24',accent:$('accentInput').value,background:$('backgroundInput').value,amoled:$('amoledInput').checked});try{saveAppearance();$('appearanceDialog').close();say('Aparência salva')}catch{say('Aparência aplicada nesta sessão. Exporte a configuração para guardá-la.')}};applyAppearance();render();
+let committedEntries=entries.slice(),committedOffset=timeOffset;const saveCore=save;
+save=async function(){try{await saveCore();committedEntries=entries.slice();committedOffset=timeOffset}catch(error){if(!isLocked){entries=committedEntries.slice();timeOffset=committedOffset}render();throw error}};
+let operationBusy=false;
+function guarded(fn){return async function(...args){if(operationBusy){args[0]?.preventDefault?.();return}operationBusy=true;const prior=[...document.querySelectorAll('button')].map(b=>[b,b.disabled]);for(const [b] of prior)if(!b.closest('dialog'))b.disabled=true;const before={entries:entries.slice(),timeOffset};try{return await fn.apply(this,args)}catch(error){say(error.message)}finally{operationBusy=false;for(const [b,disabled] of prior)b.disabled=disabled;setLockUi()}}}
+for(const [id,event] of [['file','onchange'],['configFile','onchange'],['exportConfigBtn','onclick'],['exportBackupBtn','onclick'],['lockForm','onsubmit'],['offsetForm','onsubmit']])$(id)[event]=guarded($(id)[event]);
+$('helpBtn').onclick=()=>$('helpDialog').showModal();
+$('removePinBtn').onclick=()=>{$('removePinInput').value='';$('removePinError').textContent='';$('removePinDialog').showModal()};
+$('removePinForm').onsubmit=guarded(async e=>{e.preventDefault();const previous={key:lockCryptoKey,salt:lockSalt};try{await unlockFromEnvelope($('removePinInput').value);lockEnabled=false;try{await save()}catch(error){lockEnabled=true;lockCryptoKey=previous.key;lockSalt=previous.salt;throw error}lockCryptoKey=null;lockSalt=null;localStorage.removeItem(LOCK_FLAG);await clearSessionKey();clearTimeout(idleTimer);$('removePinDialog').close();$('removePinInput').value='';setLockUi();say('PIN removido. As contas foram mantidas.')}catch(error){$('removePinError').textContent=error.message}});
+</script></body></html>
