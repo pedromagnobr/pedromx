@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "pages": [
+    "/SPSCOM/",
+    "/aegis/",
+    "/dashboard/",
+    "/dashboard/mps-monitor/",
+    "/dashboard/transocean.html",
+    "/dashboard/transocean/",
+    "/dashboard_transocean.html",
+    "/",
+    "/indice/",
+    "/obsidian.md/SPSCOM/Sum%C3%A1rio/",
+    "/relogio-amoled.html",
+    "/spscom/Sum%C3%A1rio/",
+    "/totp/",
+    "/verdinho.html"
+  ],
+  "assets": [
+    "/android-chrome-192x192.png",
+    "/android-chrome-512x512.png",
+    "/apple-touch-icon.png",
+    "/favicon-16x16.png",
+    "/favicon-32x32.png",
+    "/favicon.ico"
+  ]
+}
