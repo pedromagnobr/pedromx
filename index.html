@@ -103,22 +103,31 @@
       font-size: 0.9em;
       color: #777;
     }
+    h1 {font-size:clamp(1.5rem,5vw,2rem);overflow-wrap:anywhere}
+    button,.download {font:600 1rem "Segoe UI",sans-serif;border:1px solid #2a2f45;border-radius:9px;padding:12px 18px;background:#2a2f45;color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+    button:hover,.download:hover {background:#414963}
+    button:focus-visible,a:focus-visible {outline:3px solid #4a70ac;outline-offset:4px}
+    .extension-top {width:100%;max-width:680px;display:flex;justify-content:center}
+    .brand {display:inline-block;border-radius:12px}.brand img {display:block;max-width:100%;height:auto}
+    dialog {width:min(560px,calc(100% - 32px));max-height:85dvh;border:1px solid #dfe4ec;border-radius:16px;padding:24px;color:#333;text-align:left;overflow:auto;background:#fff}
+    dialog::backdrop {background:rgb(0 0 0 / .5)}
+    dialog h2 {margin:0 0 16px;color:#2a2f45}dialog p,dialog li {font-size:1rem;line-height:1.6}dialog p {margin-bottom:16px}
+    dialog ol {padding-left:24px}dialog li+li {margin-top:10px}.dialog-actions {display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+    .secondary {background:transparent;color:#2a2f45}.secondary:hover {background:#edf2fa}
+    #extensionStatus {font-size:.9rem;color:#667085;margin-top:16px;margin-bottom:0}
+    @media(max-width:420px){body{padding:18px}main{padding:24px 0}dialog{padding:20px}.project-link{padding:16px}}
   </style>
 </head>
 
 <body>
+  <header class="extension-top"><button id="extensionButton" type="button">Instalar extensão PMX</button></header>
   <main>
-    <img
-      src="/android-chrome-512x512.png"
-      alt="PMX"
-      width="128"
-      height="128"
-    >
+    <a class="brand" href="https://pedromx.com" aria-label="Acessar pedromx.com"><img src="/android-chrome-512x512.png" alt="PMX" width="128" height="128"></a>
 
-    <h1>Bem-vindo ao <code>p.pedromx.com</code></h1>
+    <h1>Bem-vindo(a) ao p.pedromx.com</h1>
 
     <p>
-      Este é um portal para páginas independentes hospedadas via GitHub Pages.
+      Páginas de projetos independentes hospedadas via GitHub Pages.
     </p>
 
     <p>
@@ -134,21 +143,73 @@
     <p><strong>Páginas PMX — Navegue por projetos</strong></p>
 
     <nav class="projects" aria-label="Projetos disponíveis">
-      <a class="project-link" href="/dashboard/transocean/">
-        Dashboard Transocean
-      </a>
-
-      <a class="project-link" href="/dashboard/mps-monitor/">
-        Dashboard MPS Monitor
-        <small>
-          Equipamentos omissos e sem comunicação por cliente e site.
-        </small>
-      </a>
+      <a class="project-link" href="/indice/">Índice PMX<small>Indexe tudo na melhor, mais prática, privada e personalizável página inicial</small></a>
+      <a class="project-link" href="/aegis/">Aegis<small>Aplicação Web não-oficial do autenticador Aegis</small></a>
     </nav>
   </main>
 
   <footer>
-    &copy; 2026 pedromx.com — Páginas, emails e links
+    Páginas PMX © pedromx.com — Pedro Magno Martins Azevedo
   </footer>
+<dialog id="extensionDialog" aria-labelledby="extensionTitle">
+  <h2 id="extensionTitle">Instalar extensão PMX</h2>
+  <p>A extensão abre as Páginas PMX no Edge ou Chrome e permite acessar as páginas preparadas sem internet. Também guarda uma cópia local das configurações compatíveis, no mesmo perfil do navegador.</p>
+  <p id="mobileHint" hidden>A instalação é destinada ao Edge e Chrome no computador.</p>
+  <ol id="installSteps">
+    <li>Clique em <strong>Baixar PMX.zip</strong> e extraia o arquivo em uma pasta permanente.</li>
+    <li>Abra <code>edge://extensions</code> ou <code>chrome://extensions</code> e ative o <strong>Modo do desenvolvedor</strong>.</li>
+    <li>Clique em <strong>Carregar sem compactação</strong> e escolha a pasta PMX, que contém o arquivo manifest.json.</li>
+    <li>Recarregue esta página. Nas opções da extensão, use <strong>Preparar / atualizar offline</strong> com internet e confira o estado. Abra suas páginas personalizadas e aguarde a confirmação da cópia das configurações.</li>
+  </ol>
+  <ol id="updateSteps" hidden>
+    <li>Baixe o PMX.zip atualizado e extraia os arquivos.</li>
+    <li>Substitua os arquivos na mesma pasta da extensão instalada. Não remova a instalação existente, para preservar sua cópia das configurações.</li>
+    <li>Abra <code>edge://extensions</code> ou <code>chrome://extensions</code> e clique em <strong>Recarregar</strong> na PMX.</li>
+    <li>Recarregue as Páginas PMX abertas e confira a versão nesta página.</li>
+  </ol>
+  <p>Recursos externos podem depender de internet. A cópia local não sincroniza dispositivos ou navegadores e não substitui seus arquivos de backup.</p>
+  <div class="dialog-actions"><a class="download" id="downloadExtension" href="/PMX.zip" download="PMX.zip">Baixar PMX.zip</a><button class="secondary" id="closeExtension" type="button">Fechar</button></div>
+  <p id="extensionStatus" role="status" aria-live="polite"></p>
+</dialog>
+<script>function numericExtensionVersion(v){if(typeof v!=='string'||!/^\d+(?:\.\d+){1,3}$/.test(v))return null;const parts=v.split('.').map(Number);if(parts.some(x=>!Number.isInteger(x)||x>65535))return null;while(parts.length<4)parts.push(0);return parts}
+function sameExtensionVersion(a,b){const x=numericExtensionVersion(a),y=numericExtensionVersion(b);return !!x&&!!y&&x.every((v,i)=>v===y[i])}
+async function versionFromExtensionZip(buffer,fileName){if(buffer.byteLength>8388608)throw Error('ZIP muito grande');const view=new DataView(buffer),bytes=new Uint8Array(buffer),text=new TextDecoder();let eocd=-1;for(let i=bytes.length-22;i>=Math.max(0,bytes.length-65557);i--)if(view.getUint32(i,true)===0x06054b50&&i+22+view.getUint16(i+20,true)===bytes.length){eocd=i;break}if(eocd<0)throw Error('ZIP inválido');const count=view.getUint16(eocd+10,true),size=view.getUint32(eocd+12,true);let pos=view.getUint32(eocd+16,true);if(view.getUint16(eocd+4,true)||view.getUint16(eocd+6,true)||pos+size>eocd||count>1000)throw Error('Estrutura ZIP inválida');let manifest=null;for(let n=0;n<count;n++){if(pos+46>eocd||view.getUint32(pos,true)!==0x02014b50)throw Error('Diretório ZIP inválido');const flags=view.getUint16(pos+8,true),method=view.getUint16(pos+10,true),compressed=view.getUint32(pos+20,true),uncompressed=view.getUint32(pos+24,true),nameLen=view.getUint16(pos+28,true),extra=view.getUint16(pos+30,true),comment=view.getUint16(pos+32,true),local=view.getUint32(pos+42,true);const name=text.decode(bytes.slice(pos+46,pos+46+nameLen));pos+=46+nameLen+extra+comment;if(pos>eocd)throw Error('Diretório ZIP inválido');if(name!==fileName.replace(/\.zip$/,'')+'/manifest.json'&&name!=='manifest.json')continue;if(manifest||flags&1||uncompressed>65536||compressed>65536||local+30>bytes.length||view.getUint32(local,true)!==0x04034b50)throw Error('Manifesto inválido');const start=local+30+view.getUint16(local+26,true)+view.getUint16(local+28,true);if(start+compressed>bytes.length)throw Error('Manifesto incompleto');let data=bytes.slice(start,start+compressed);if(method===8){const stream=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));const reader=stream.getReader(),chunks=[];let total=0;for(;;){const part=await reader.read();if(part.done)break;total+=part.value.length;if(total>65536){await reader.cancel();throw Error('Manifesto muito grande')}chunks.push(part.value)}data=new Uint8Array(total);let offset=0;for(const chunk of chunks){data.set(chunk,offset);offset+=chunk.length}}else if(method!==0)throw Error('Compressão não suportada');if(data.length!==uncompressed)throw Error('Manifesto incompleto');manifest=JSON.parse(text.decode(data))}if(!manifest||manifest.name!=='PMX'||manifest.manifest_version!==3||!numericExtensionVersion(manifest.version))throw Error('Versão inválida');return manifest.version}
+
+const $=id=>document.getElementById(id);
+let installed='',latest='',probe='',job=null,checkedAt=0,probeTimer;
+const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function compareVersions(a,b){const x=numericExtensionVersion(a),y=numericExtensionVersion(b);if(!x||!y)return null;for(let i=0;i<4;i++)if(x[i]!==y[i])return x[i]>y[i]?1:-1;return 0}
+function renderExtension(){
+ const order=compareVersions(installed,latest);
+ $('extensionButton').textContent=mobile?'Extensão disponível para computador':!installed?'Instalar extensão PMX':order===null?'Extensão instalada — verificar atualização':order<0?'Atualizar extensão PMX':'Extensão instalada e atualizada';
+ $('extensionTitle').textContent=installed?'Como atualizar a extensão PMX':'Instalar extensão PMX';
+ $('installSteps').hidden=!!installed;$('updateSteps').hidden=!installed;$('mobileHint').hidden=!mobile;
+ $('extensionStatus').textContent=installed?(latest?'Versão instalada: '+installed+' · Versão publicada: '+latest:'Versão instalada: '+installed+'. Não foi possível confirmar a versão publicada.'):latest?'Versão disponível: '+latest:'A versão publicada será verificada quando houver conexão. Se você já usa uma PMX anterior à 1.0.4, atualize-a para permitir sua identificação nesta página.';
+}
+async function checkVersion(force=false){
+ if(job)return job;if(!force&&Date.now()-checkedAt<60000)return;
+ job=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{
+  const response=await fetch('https://raw.githubusercontent.com/pedromagnobr/pedromx/main/PMX.zip',{cache:'no-store',credentials:'omit',signal:controller.signal});
+  if(!response.ok)throw Error('fetch');latest=await versionFromExtensionZip(await response.arrayBuffer(),'PMX.zip');
+ }catch{latest=''}finally{clearTimeout(timer);checkedAt=Date.now();job=null;renderExtension()}})();return job;
+}
+function queryExtension(){
+ if(location.origin!=='https://p.pedromx.com'||window.top!==window)return;
+ clearTimeout(probeTimer);probe=Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join('');
+ window.postMessage({type:'PMX_EXTENSION_QUERY',nonce:probe},location.origin);
+ probeTimer=setTimeout(()=>{probe='';installed='';renderExtension()},1800);
+}
+window.addEventListener('message',event=>{
+ const data=event.data;if(event.source!==window||event.origin!==location.origin||location.origin!=='https://p.pedromx.com'||!data||data.type!=='PMX_EXTENSION_PRESENT'||!numericExtensionVersion(data.version))return;
+ if(data.nonce===undefined){queryExtension();return}
+ if(!probe||data.nonce!==probe)return;clearTimeout(probeTimer);probe='';installed=data.version;renderExtension();void checkVersion();
+});
+$('extensionButton').onclick=()=>{renderExtension();if(!$('extensionDialog').open)$('extensionDialog').showModal();void checkVersion()};
+$('closeExtension').onclick=()=>$('extensionDialog').close();
+$('extensionDialog').addEventListener('click',event=>{if(event.target===$('extensionDialog')){const r=event.target.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)event.target.close()}});
+window.addEventListener('online',()=>void checkVersion(true));
+window.addEventListener('pageshow',queryExtension);
+renderExtension();queryExtension();void checkVersion();
+</script>
 </body>
 </html>
