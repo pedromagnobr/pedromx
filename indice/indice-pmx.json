@@ -1,0 +1,245 @@
+{
+  "version": 3,
+  "person": "Pedro Azevedo/o",
+  "vault": "SPSCOM",
+  "spaceTitle": "Seu espaço de trabalho",
+  "spaceDescription": "Seu ponto de partida",
+  "title": "Índice",
+  "pageDescription": "Um guia para visitar atalhos importantes",
+  "searchPlaceholder": "Filtrar atalhos, documentos e links",
+  "dominantColor": "#DC582A",
+  "backgroundColor": "#1F2A44",
+  "amoled": true,
+  "clock24h": true,
+  "openSameTab": false,
+  "openSameTabWhenFiltered": true,
+  "brandImage": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii00OC40NCAtMTAuMjQgNjM2LjY2IDEyMC40OCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJTUFNDT00iPjxyZWN0IHg9Ii00MC4yIiB5PSIyMy41IiB3aWR0aD0iMTYuNDgiIGhlaWdodD0iMTYuNDgiIHJ4PSIyLjMxIiBmaWxsPSIjRDlFMUUyIj48L3JlY3Q+PHJlY3QgeD0iLTIwLjEiIHk9IjQzLjYiIHdpZHRoPSIxNi40OCIgaGVpZ2h0PSIxNi40OCIgcng9IjIuMzEiIGZpbGw9IiNEQzU4MkEiPjwvcmVjdD48cmVjdCB4PSItNDAuMiIgeT0iNjMuNyIgd2lkdGg9IjE2LjQ4IiBoZWlnaHQ9IjE2LjQ4IiByeD0iMi4zMSIgZmlsbD0iI0ZGRkZGRiI+PC9yZWN0PjxwYXRoIGQ9Ik0zOC43OTU3MjQwNTEzMzkyODUgMTAyLjBRMjcuNDM0MjkxMjk0NjQyODU0IDEwMi4wIDE4LjY4MjE0NjM0NDg2NjA3IDk3Ljk0NDY0MTExMzI4MTI1UTkuOTMwMDAxMzk1MDg5Mjg1IDkzLjg4OTI4MjIyNjU2MjUgNC45NjUwMDA2OTc1NDQ2NDIgODYuMTU3NDk2ODYxMDQ5MTFRMC4wIDc4LjQyNTcxMTQ5NTUzNTcyIDAuMCA2Ny4yODg1NzQyMTg3NVY2My42MDM1Njc5NDA4NDgyMTVIMTYuMjYxNDc0NjA5Mzc1VjY3LjI4ODU3NDIxODc1UTE2LjI2MTQ3NDYwOTM3NSA3Ny40Nzg1NTA1MDIyMzIxNCAyMi40MTAzOTE2NzEzMTY5NiA4Mi41MDM1NDAwMzkwNjI1UTI4LjU1OTMwODczMzI1ODkyMyA4Ny41Mjg1Mjk1NzU4OTI4NiAzOC43OTU3MjQwNTEzMzkyODUgODcuNTI4NTI5NTc1ODkyODZRNDkuMTc0OTk2NTEyMjc2Nzg1IDg3LjUyODUyOTU3NTg5Mjg2IDU0LjQzMzIwMTM4MTEzODM5IDgzLjE5ODg5NjEzNTYwMjY4UTU5LjY5MTQwNjI1IDc4Ljg2OTI2MjY5NTMxMjUgNTkuNjkxNDA2MjUgNzIuMTM0Mjc3MzQzNzVRNTkuNjkxNDA2MjUgNjcuNTM2NDI5MjY4OTczMjIgNTcuMTk0MjY2MTgzMDM1NzEgNjQuNzAyNTA1OTI5MTI5NDdRNTQuNjk3MTI2MTE2MDcxNDIgNjEuODY4NTgyNTg5Mjg1NzE1IDUwLjAyMjEyOTYwMzc5NDY0IDYwLjA4NTcyODIzNjYwNzE0NlE0NS4zNDcxMzMwOTE1MTc4NTQgNTguMzAyODczODgzOTI4NTggMzguODEzNTYzNzU1NTgwMzU0IDU2LjgwNDMwMzg1MDQ0NjQzTDM0LjA5Mjg3ODA2OTE5NjQyIDU1LjcwNTAyNTgwOTE1MTc4NVEyNC4zMzIxNTMzMjAzMTI1IDUzLjQ1NDMxMDgyNTg5Mjg2IDE3LjIwMjUwNTkyOTEyOTQ2NSA1MC4wMjQzMDk0MzA4MDM1OFExMC4wNzI4NTg1Mzc5NDY0MjcgNDYuNTk0MzA4MDM1NzE0MjkgNi4xOTY3ODYwNjMwNTgwMzUgNDEuMDAyNTE5ODgwMDIyMzNRMi4zMjA3MTM1ODgxNjk2NDIzIDM1LjQxMDczMTcyNDMzMDM2IDIuMzIwNzEzNTg4MTY5NjQyMyAyNi41MTI4Njk2OTg2NjA3MjJRMi4zMjA3MTM1ODgxNjk2NDIzIDE3LjYxNTAwNzY3Mjk5MTA3IDYuNjQyODU3MTQyODU3MTQyIDExLjIzNzUwNTIzMTU4NDgyN1ExMC45NjUwMDA2OTc1NDQ2NDIgNC44NjAwMDI3OTAxNzg1ODQgMTguNzcxMDc0NTY3NTIyMzIgMS40MzAwMDEzOTUwODkyOTE4UTI2LjU3NzE0ODQzNzUgLTIuMCAzNy4wODE0MzgzMzcwNTM1NyAtMi4wUTQ3LjU4NTcyODIzNjYwNzE0IC0yLjAgNTUuODM3ODczMTg2MzgzOTIgMS41OTAzNTgxODkxNzQxMTEyUTY0LjA5MDAxODEzNjE2MDcxIDUuMTgwNzE2Mzc4MzQ4MjIyIDY4Ljg0MDczMzExOTQxOTY0IDEyLjI1NTAwNDg4MjgxMjUwN1E3My41OTE0NDgxMDI2Nzg1NyAxOS4zMjkyOTMzODcyNzY3OTIgNzMuNTkxNDQ4MTAyNjc4NTcgMjkuOTc2NDQwNDI5Njg3NVYzNC44NTcxNDI4NTcxNDI4Nkg1Ny4zMjk5NzM0OTMzMDM1N1YyOS45NzY0NDA0Mjk2ODc1UTU3LjMyOTk3MzQ5MzMwMzU3IDIzLjczNzE2NTE3ODU3MTQzIDU0LjgxODE5MzcwODE0NzMyIDE5LjkwNDY3MTgwNTI0NTU0MlE1Mi4zMDY0MTM5MjI5OTEwNyAxNi4wNzIxNzg0MzE5MTk2NTMgNDcuNzQzNTY1MTUwNjY5NjQgMTQuMjcxODI0NDI4MDEzNDAzUTQzLjE4MDcxNjM3ODM0ODIxIDEyLjQ3MTQ3MDQyNDEwNzE1MyAzNy4wODE0MzgzMzcwNTM1NyAxMi40NzE0NzA0MjQxMDcxNTNRMjguMDU1MDE4ODMzNzA1MzU0IDEyLjQ3MTQ3MDQyNDEwNzE1MyAyMy4zMTg2MDM1MTU2MjUgMTYuMDcwNzQ4NDY1NDAxNzkyUTE4LjU4MjE4ODE5NzU0NDY0MiAxOS42NzAwMjY1MDY2OTY0MyAxOC41ODIxODgxOTc1NDQ2NDIgMjYuMDgxNDM4MzM3MDUzNTdRMTguNTgyMTg4MTk3NTQ0NjQyIDMwLjM1NTcxMjg5MDYyNSAyMC43MjA3NTU0NDA4NDgyMTUgMzMuMTcyMTM2NTc5MjQxMDhRMjIuODU5MzIyNjg0MTUxNzg1IDM1Ljk4ODU2MDI2Nzg1NzE1IDI3LjAxMzk1OTYxMjE2NTE3NyAzNy44MDc4NDM4ODk1MDg5M1EzMS4xNjg1OTY1NDAxNzg1NyAzOS42MjcxMjc1MTExNjA3MTUgMzcuMzc4NTkyMzU0OTEwNzE1IDQxLjAxNzgzOTcwNDI0MTA4TDQyLjA5OTI3ODA0MTI5NDY0IDQyLjExNzExNzc0NTUzNTcxNVE1Mi4xMTM1Nzc3MDY0NzMyMSA0NC4yOTc4MzQxMjM4ODM5MyA1OS43MDk2NTU3NjE3MTg3NCA0Ny43NDY3NjUxMzY3MTg3NVE2Ny4zMDU3MzM4MTY5NjQyOCA1MS4xOTU2OTYxNDk1NTM1OCA3MS42MjkzMDczMzgxNjk2NCA1Ni45MzAzNDE0NDgxMDI2OFE3NS45NTI4ODA4NTkzNzUgNjIuNjY0OTg2NzQ2NjUxNzg1IDc1Ljk1Mjg4MDg1OTM3NSA3MS43MDI4NDU5ODIxNDI4NlE3NS45NTI4ODA4NTkzNzUgODAuNzQwNzA1MjE3NjMzOTMgNzEuMzgwMDIyMzIxNDI4NTcgODcuNTQ2Nzc5MDg3NjExNjFRNjYuODA3MTYzNzgzNDgyMTQgOTQuMzUyODUyOTU3NTg5MjkgNTguNDY0NjYwNjQ0NTMxMjUgOTguMTc2NDI2NDc4Nzk0NjRRNTAuMTIyMTU3NTA1NTgwMzU0IDEwMi4wIDM4Ljc5NTcyNDA1MTMzOTI4NSAxMDIuMFogTTk1LjkyODU3MTQyODU3MTQyIDEwMC4wVjAuMEgxMzYuMDU2NDQ4ODAwMjIzMlExNDUuMzQ1MDIzMDE4OTczMiAwLjAgMTUyLjUyNDMwOTQzMDgwMzU2IDMuNjgwNzE2Mzc4MzQ4MjE1M1ExNTkuNzAzNTk1ODQyNjMzOTIgNy4zNjE0MzI3NTY2OTY0MzEgMTYzLjc5MjUyNDA2NTI5MDE3IDE0LjA3ODU3ODQwNDAxNzg2MVExNjcuODgxNDUyMjg3OTQ2NDIgMjAuNzk1NzI0MDUxMzM5MjkyIDE2Ny44ODE0NTIyODc5NDY0MiAzMC4xMTkyOTc1NzI1NDQ2NTNWMzIuMDQ5Mjk4OTY3NjMzOTNRMTY3Ljg4MTQ1MjI4Nzk0NjQyIDQxLjI2NTAxNDY0ODQzNzUgMTYzLjY2NzE2NjU3MzY2MDcyIDQ4LjA1MzU4ODg2NzE4NzVRMTU5LjQ1Mjg4MDg1OTM3NSA1NC44NDIxNjMwODU5Mzc1IDE1Mi4yNzM1OTQ0NDc1NDQ2NCA1OC41MDUzNzk4MTMwNTgwNFExNDUuMDk0MzA4MDM1NzE0MjggNjIuMTY4NTk2NTQwMTc4NTggMTM2LjA1NjQ0ODgwMDIyMzIgNjIuMTY4NTk2NTQwMTc4NThIMTEyLjQwNTc2MTcxODc0OTk5VjEwMC4wWk0xMTIuNDA1NzYxNzE4NzQ5OTkgNDcuMTk1Njk2MTQ5NTUzNThIMTM0LjQwOTMwMTc1NzgxMjVRMTQyLjEwMzU2Nzk0MDg0ODIgNDcuMTk1Njk2MTQ5NTUzNTggMTQ2Ljc1MzkxNDk2OTMwODAzIDQzLjA5NjQxODEwODI1ODkzUTE1MS40MDQyNjE5OTc3Njc4MyAzOC45OTcxNDAwNjY5NjQyOSAxNTEuNDA0MjYxOTk3NzY3ODMgMzEuNzk4NTgzOTg0Mzc1VjMwLjM3MDAxMjU1NTgwMzU3UTE1MS40MDQyNjE5OTc3Njc4MyAyMy4xMzY0NTcxNzA3NTg5MyAxNDYuNzg4OTE0MjcxNzYzMzYgMTkuMDU0Njc4NzgwNjkxOTY1UTE0Mi4xNzM1NjY1NDU3NTg5MiAxNC45NzI5MDAzOTA2MjUgMTM0LjQwOTMwMTc1NzgxMjUgMTQuOTcyOTAwMzkwNjI1SDExMi40MDU3NjE3MTg3NDk5OVogTTIyMC43OTU3MjQwNTEzMzkyOCAxMDIuMFEyMDkuNDM0MjkxMjk0NjQyODYgMTAyLjAgMjAwLjY4MjE0NjM0NDg2NjA2IDk3Ljk0NDY0MTExMzI4MTI1UTE5MS45MzAwMDEzOTUwODkyOCA5My44ODkyODIyMjY1NjI1IDE4Ni45NjUwMDA2OTc1NDQ2NCA4Ni4xNTc0OTY4NjEwNDkxMVExODIuMCA3OC40MjU3MTE0OTU1MzU3MiAxODIuMCA2Ny4yODg1NzQyMTg3NVY2My42MDM1Njc5NDA4NDgyMTVIMTk4LjI2MTQ3NDYwOTM3NVY2Ny4yODg1NzQyMTg3NVExOTguMjYxNDc0NjA5Mzc1IDc3LjQ3ODU1MDUwMjIzMjE0IDIwNC40MTAzOTE2NzEzMTY5NyA4Mi41MDM1NDAwMzkwNjI1UTIxMC41NTkzMDg3MzMyNTg5MiA4Ny41Mjg1Mjk1NzU4OTI4NiAyMjAuNzk1NzI0MDUxMzM5MjggODcuNTI4NTI5NTc1ODkyODZRMjMxLjE3NDk5NjUxMjI3Njc4IDg3LjUyODUyOTU3NTg5Mjg2IDIzNi40MzMyMDEzODExMzg0IDgzLjE5ODg5NjEzNTYwMjY4UTI0MS42OTE0MDYyNSA3OC44NjkyNjI2OTUzMTI1IDI0MS42OTE0MDYyNSA3Mi4xMzQyNzczNDM3NVEyNDEuNjkxNDA2MjUgNjcuNTM2NDI5MjY4OTczMjIgMjM5LjE5NDI2NjE4MzAzNTcyIDY0LjcwMjUwNTkyOTEyOTQ3UTIzNi42OTcxMjYxMTYwNzE0MiA2MS44Njg1ODI1ODkyODU3MTUgMjMyLjAyMjEyOTYwMzc5NDY0IDYwLjA4NTcyODIzNjYwNzE0NlEyMjcuMzQ3MTMzMDkxNTE3ODYgNTguMzAyODczODgzOTI4NTggMjIwLjgxMzU2Mzc1NTU4MDM2IDU2LjgwNDMwMzg1MDQ0NjQzTDIxNi4wOTI4NzgwNjkxOTY0MiA1NS43MDUwMjU4MDkxNTE3ODVRMjA2LjMzMjE1MzMyMDMxMjUgNTMuNDU0MzEwODI1ODkyODYgMTk5LjIwMjUwNTkyOTEyOTQ3IDUwLjAyNDMwOTQzMDgwMzU4UTE5Mi4wNzI4NTg1Mzc5NDY0MiA0Ni41OTQzMDgwMzU3MTQyOSAxODguMTk2Nzg2MDYzMDU4MDMgNDEuMDAyNTE5ODgwMDIyMzNRMTg0LjMyMDcxMzU4ODE2OTY0IDM1LjQxMDczMTcyNDMzMDM2IDE4NC4zMjA3MTM1ODgxNjk2NCAyNi41MTI4Njk2OTg2NjA3MjJRMTg0LjMyMDcxMzU4ODE2OTY0IDE3LjYxNTAwNzY3Mjk5MTA3IDE4OC42NDI4NTcxNDI4NTcxNCAxMS4yMzc1MDUyMzE1ODQ4MjdRMTkyLjk2NTAwMDY5NzU0NDY0IDQuODYwMDAyNzkwMTc4NTg0IDIwMC43NzEwNzQ1Njc1MjIzIDEuNDMwMDAxMzk1MDg5MjkxOFEyMDguNTc3MTQ4NDM3NSAtMi4wIDIxOS4wODE0MzgzMzcwNTM1NiAtMi4wUTIyOS41ODU3MjgyMzY2MDcxNCAtMi4wIDIzNy44Mzc4NzMxODYzODM5NCAxLjU5MDM1ODE4OTE3NDExMTJRMjQ2LjA5MDAxODEzNjE2MDcyIDUuMTgwNzE2Mzc4MzQ4MjIyIDI1MC44NDA3MzMxMTk0MTk2NCAxMi4yNTUwMDQ4ODI4MTI1MDdRMjU1LjU5MTQ0ODEwMjY3ODU2IDE5LjMyOTI5MzM4NzI3Njc5MiAyNTUuNTkxNDQ4MTAyNjc4NTYgMjkuOTc2NDQwNDI5Njg3NVYzNC44NTcxNDI4NTcxNDI4NkgyMzkuMzI5OTczNDkzMzAzNTZWMjkuOTc2NDQwNDI5Njg3NVEyMzkuMzI5OTczNDkzMzAzNTYgMjMuNzM3MTY1MTc4NTcxNDMgMjM2LjgxODE5MzcwODE0NzMgMTkuOTA0NjcxODA1MjQ1NTQyUTIzNC4zMDY0MTM5MjI5OTEwNiAxNi4wNzIxNzg0MzE5MTk2NTMgMjI5Ljc0MzU2NTE1MDY2OTY0IDE0LjI3MTgyNDQyODAxMzQwM1EyMjUuMTgwNzE2Mzc4MzQ4MjIgMTIuNDcxNDcwNDI0MTA3MTUzIDIxOS4wODE0MzgzMzcwNTM1NiAxMi40NzE0NzA0MjQxMDcxNTNRMjEwLjA1NTAxODgzMzcwNTM2IDEyLjQ3MTQ3MDQyNDEwNzE1MyAyMDUuMzE4NjAzNTE1NjI1IDE2LjA3MDc0ODQ2NTQwMTc5MlEyMDAuNTgyMTg4MTk3NTQ0NjQgMTkuNjcwMDI2NTA2Njk2NDMgMjAwLjU4MjE4ODE5NzU0NDY0IDI2LjA4MTQzODMzNzA1MzU3UTIwMC41ODIxODgxOTc1NDQ2NCAzMC4zNTU3MTI4OTA2MjUgMjAyLjcyMDc1NTQ0MDg0ODIyIDMzLjE3MjEzNjU3OTI0MTA4UTIwNC44NTkzMjI2ODQxNTE3OCAzNS45ODg1NjAyNjc4NTcxNSAyMDkuMDEzOTU5NjEyMTY1MTcgMzcuODA3ODQzODg5NTA4OTNRMjEzLjE2ODU5NjU0MDE3ODU2IDM5LjYyNzEyNzUxMTE2MDcxNSAyMTkuMzc4NTkyMzU0OTEwNzIgNDEuMDE3ODM5NzA0MjQxMDhMMjI0LjA5OTI3ODA0MTI5NDY0IDQyLjExNzExNzc0NTUzNTcxNVEyMzQuMTEzNTc3NzA2NDczMjIgNDQuMjk3ODM0MTIzODgzOTMgMjQxLjcwOTY1NTc2MTcxODc1IDQ3Ljc0Njc2NTEzNjcxODc1UTI0OS4zMDU3MzM4MTY5NjQyOCA1MS4xOTU2OTYxNDk1NTM1OCAyNTMuNjI5MzA3MzM4MTY5NjQgNTYuOTMwMzQxNDQ4MTAyNjhRMjU3Ljk1Mjg4MDg1OTM3NSA2Mi42NjQ5ODY3NDY2NTE3ODUgMjU3Ljk1Mjg4MDg1OTM3NSA3MS43MDI4NDU5ODIxNDI4NlEyNTcuOTUyODgwODU5Mzc1IDgwLjc0MDcwNTIxNzYzMzkzIDI1My4zODAwMjIzMjE0Mjg1NiA4Ny41NDY3NzkwODc2MTE2MVEyNDguODA3MTYzNzgzNDgyMTQgOTQuMzUyODUyOTU3NTg5MjkgMjQwLjQ2NDY2MDY0NDUzMTI1IDk4LjE3NjQyNjQ3ODc5NDY0UTIzMi4xMjIxNTc1MDU1ODAzNiAxMDIuMCAyMjAuNzk1NzI0MDUxMzM5MjggMTAyLjBaIE0zMTUuMjk4NTgzOTg0Mzc1IDEwMi4wUTI5Ni45NzIxNTA1MzAxMzM5IDEwMi4wIDI4Ni4yMDI1MDU5MjkxMjk0IDkxLjY0Mjg1NzE0Mjg1NzE0UTI3NS40MzI4NjEzMjgxMjUgODEuMjg1NzE0Mjg1NzE0MjkgMjc1LjQzMjg2MTMyODEyNSA2MS44MjUwMDM0ODc3MjMyMTVWMzguMTc0OTk2NTEyMjc2NzlRMjc1LjQzMjg2MTMyODEyNSAxOC43MTQyODU3MTQyODU3MjIgMjg2LjIwMjUwNTkyOTEyOTQgOC4zNTcxNDI4NTcxNDI4NjFRMjk2Ljk3MjE1MDUzMDEzMzkgLTIuMCAzMTUuMjk4NTgzOTg0Mzc1IC0yLjBRMzMzLjQ4MjE2MDI5NTc1ODkgLTIuMCAzNDMuMzQzNTkzMDUyNDU1MzMgOC4wMDE0Mjk5NjY1MTc4NjFRMzUzLjIwNTAyNTgwOTE1MTggMTguMDAyODU5OTMzMDM1NzIyIDM1My4yMDUwMjU4MDkxNTE4IDM1LjM5OTI5MTk5MjE4NzVWMzYuMjIxNDM1NTQ2ODc1SDMzNi45NDM1NTExOTk3NzY4VjM0Ljg5Nzg2MjAyNTY2OTY1UTMzNi45NDM1NTExOTk3NzY4IDI1LjIwMDczNTkwOTU5ODIyMiAzMzEuNjI5OTg3NDQ0MTk2NDQgMTguOTc4OTYwMzA5NzA5ODI3UTMyNi4zMTY0MjM2ODg2MTYwNiAxMi43NTcxODQ3MDk4MjE0MyAzMTUuMjk4NTgzOTg0Mzc1IDEyLjc1NzE4NDcwOTgyMTQzUTMwNC4zNTM2MDI4MTgwODAzMyAxMi43NTcxODQ3MDk4MjE0MyAyOTguMTMxODI3MjE4MTkxOSAxOS40NjAwMzA2OTE5NjQyOTJRMjkxLjkxMDA1MTYxODMwMzU2IDI2LjE2Mjg3NjY3NDEwNzE1MyAyOTEuOTEwMDUxNjE4MzAzNTYgMzcuODg5MjgyMjI2NTYyNVY2Mi4xMTA3MTc3NzM0Mzc1UTI5MS45MTAwNTE2MTgzMDM1NiA3My43MjkyNjU0ODU0OTEwNyAyOTguMTMxODI3MjE4MTkxOSA4MC40ODYwNDAzODc4MzQ4MlEzMDQuMzUzNjAyODE4MDgwMzMgODcuMjQyODE1MjkwMTc4NTcgMzE1LjI5ODU4Mzk4NDM3NSA4Ny4yNDI4MTUyOTAxNzg1N1EzMjYuMzE2NDIzNjg4NjE2MDYgODcuMjQyODE1MjkwMTc4NTcgMzMxLjYyOTk4NzQ0NDE5NjQ0IDgwLjk2NzExMDc3MDA4OTI4UTMzNi45NDM1NTExOTk3NzY4IDc0LjY5MTQwNjI1IDMzNi45NDM1NTExOTk3NzY4IDY1LjEwMjEzNzk3NDMzMDM2VjYyLjYzNTcwNzMxMDI2Nzg2SDM1My4yMDUwMjU4MDkxNTE4VjY0LjYwMDcwODAwNzgxMjVRMzUzLjIwNTAyNTgwOTE1MTggODEuOTk3MTQwMDY2OTY0MjkgMzQzLjM0MzU5MzA1MjQ1NTMzIDkxLjk5ODU3MDAzMzQ4MjE0UTMzMy40ODIxNjAyOTU3NTg5IDEwMi4wIDMxNS4yOTg1ODM5ODQzNzUgMTAyLjBaIE00MTIuMjY3ODc0NTgxNDczMiAxMDIuMFEzOTMuNzI1NzI1NDQ2NDI4NTYgMTAyLjAgMzgyLjc1Nzg2NDgxNTg0ODIgOTEuNjQyODU3MTQyODU3MTRRMzcxLjc5MDAwNDE4NTI2NzkgODEuMjg1NzE0Mjg1NzE0MjkgMzcxLjc5MDAwNDE4NTI2NzkgNjEuODI1MDAzNDg3NzIzMjE1VjM4LjE3NDk5NjUxMjI3Njc5UTM3MS43OTAwMDQxODUyNjc5IDE4LjcxNDI4NTcxNDI4NTcyMiAzODIuNzU3ODY0ODE1ODQ4MiA4LjM1NzE0Mjg1NzE0Mjg2MVEzOTMuNzI1NzI1NDQ2NDI4NTYgLTIuMCA0MTIuMjY3ODc0NTgxNDczMiAtMi4wUTQzMC44MTAwMjM3MTY1MTc5IC0yLjAgNDQxLjc3Nzg4NDM0NzA5ODIgOC4zNTcxNDI4NTcxNDI4NjFRNDUyLjc0NTc0NDk3NzY3ODU2IDE4LjcxNDI4NTcxNDI4NTcyMiA0NTIuNzQ1NzQ0OTc3Njc4NTYgMzguMTc0OTk2NTEyMjc2NzlWNjEuODI1MDAzNDg3NzIzMjE1UTQ1Mi43NDU3NDQ5Nzc2Nzg1NiA4MS4yODU3MTQyODU3MTQyOSA0NDEuNzc3ODg0MzQ3MDk4MiA5MS42NDI4NTcxNDI4NTcxNFE0MzAuODEwMDIzNzE2NTE3OSAxMDIuMCA0MTIuMjY3ODc0NTgxNDczMiAxMDIuMFpNNDEyLjI2Nzg3NDU4MTQ3MzIgODcuMjQyODE1MjkwMTc4NTdRNDIzLjY3OTI4NjQxMTgzMDQgODcuMjQyODE1MjkwMTc4NTcgNDI5Ljk3MzkyMDU0OTY2NTIgODAuNTM5OTY5MzA4MDM1NzJRNDM2LjI2ODU1NDY4NzUgNzMuODM3MTIzMzI1ODkyODYgNDM2LjI2ODU1NDY4NzUgNjIuMzI2NDMzNDU0MjQxMDhWMzcuNjczNTY2NTQ1NzU4OTNRNDM2LjI2ODU1NDY4NzUgMjYuMTYyODc2Njc0MTA3MTUzIDQyOS45NzM5MjA1NDk2NjUyIDE5LjQ2MDAzMDY5MTk2NDI5MlE0MjMuNjc5Mjg2NDExODMwNCAxMi43NTcxODQ3MDk4MjE0MyA0MTIuMjY3ODc0NTgxNDczMiAxMi43NTcxODQ3MDk4MjE0M1E0MDAuOTk5MzE5ODkzOTczMiAxMi43NTcxODQ3MDk4MjE0MyAzOTQuNjMzMjU3MTg0NzA5OCAxOS40NjAwMzA2OTE5NjQyOTJRMzg4LjI2NzE5NDQ3NTQ0NjQ0IDI2LjE2Mjg3NjY3NDEwNzE1MyAzODguMjY3MTk0NDc1NDQ2NDQgMzcuNjczNTY2NTQ1NzU4OTNWNjIuMzI2NDMzNDU0MjQxMDhRMzg4LjI2NzE5NDQ3NTQ0NjQ0IDczLjgzNzEyMzMyNTg5Mjg2IDM5NC42MzMyNTcxODQ3MDk4IDgwLjUzOTk2OTMwODAzNTcyUTQwMC45OTkzMTk4OTM5NzMyIDg3LjI0MjgxNTI5MDE3ODU3IDQxMi4yNjc4NzQ1ODE0NzMyIDg3LjI0MjgxNTI5MDE3ODU3WiBNNDc1LjA3MTQyODU3MTQyODU2IDEwMC4wVjAuMEg1MDUuODcxNTEyMjc2Nzg1N0w1MjYuMzQyMTYzMDg1OTM3NSA4OC45NjI4MjA4NzA1MzU3Mkg1MjguNzAzNTk1ODQyNjM0TDU0OS4xNzQyNDY2NTE3ODU3IDAuMEg1NzkuOTc0MzMwMzU3MTQyOVYxMDAuMEg1NjMuOTk4NTcwMDMzNDgyMVYxMS43OTIxODQwMTIyNzY3OTJINTYxLjYzNzEzNzI3Njc4NTdMNTQxLjI3NDM0NDMwODAzNTcgMTAwLjBINTEzLjc3MTQxNDYyMDUzNTdMNDkzLjQwODYyMTY1MTc4NTcgMTEuNzkyMTg0MDEyMjc2NzkySDQ5MS4wNDcxODg4OTUwODkzVjEwMC4wWiIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPjwvc3ZnPg==",
+  "brandImageSource": "",
+  "sections": [
+    {
+      "name": "Importante",
+      "description": "Itens de uso constante"
+    },
+    {
+      "name": "Utilitários",
+      "description": "Praticidade no acesso"
+    }
+  ],
+  "exclusives": {
+    "device": "desktop",
+    "items": [],
+    "categories": [
+      "app"
+    ]
+  },
+  "categoryImages": {
+    "link": {
+      "image": "",
+      "source": ""
+    },
+    "markdown": {
+      "image": "",
+      "source": ""
+    },
+    "app": {
+      "image": "",
+      "source": ""
+    },
+    "settings": {
+      "image": "",
+      "source": ""
+    }
+  },
+  "icons": {
+    "link": {
+      "name": "Link",
+      "image": "",
+      "source": ""
+    },
+    "document": {
+      "name": "Documento",
+      "image": "",
+      "source": ""
+    },
+    "action": {
+      "name": "Ação",
+      "image": "",
+      "source": ""
+    },
+    "settings": {
+      "name": "Configuração",
+      "image": "",
+      "source": ""
+    }
+  },
+  "groups": {
+    "quickAccess": [
+      "item-01",
+      "item-02",
+      "item-03",
+      "item-04"
+    ],
+    "favorites": [
+      "item-05",
+      "item-06",
+      "item-07",
+      "item-08"
+    ],
+    "other": [
+      "item-09",
+      "item-10",
+      "item-11",
+      "item-12",
+      "item-13",
+      "item-14",
+      "item-15",
+      "item-16",
+      "item-17",
+      "item-18",
+      "item-19",
+      "item-20"
+    ]
+  },
+  "items": {
+    "item-01": {
+      "name": "Nota Diária",
+      "description": "Abra ou crie a nota de hoje no Obsidian",
+      "url": "obsidian://daily?vault=#Nome-do-cofre",
+      "category": "markdown",
+      "icon": "document"
+    },
+    "item-02": {
+      "name": "Equipamentos",
+      "description": "Consulte as informações dos equipamentos",
+      "url": "obsidian://open?vault=#Nome-do-cofre&file=Importante%2FEquipamentos",
+      "category": "markdown",
+      "icon": "action"
+    },
+    "item-03": {
+      "name": "Suprimentos e Peças",
+      "description": "Consulte suas notas sobre suprimentos e peças",
+      "url": "obsidian://open?vault=#Nome-do-cofre&file=Importante%2FSuprimentos+e+Pe%C3%A7as",
+      "category": "markdown",
+      "icon": "action"
+    },
+    "item-04": {
+      "name": "Configurar o índice",
+      "description": "Personalize os atalhos, preferência e comportamentos dessa página",
+      "url": "indice-pmx://configuracao",
+      "category": "settings",
+      "icon": "settings"
+    },
+    "item-05": {
+      "name": "ChatGPT",
+      "description": "Abrir o aplicativo ChatGPT para Windows",
+      "url": "chatgpt://start",
+      "category": "app",
+      "icon": "action"
+    },
+    "item-06": {
+      "name": "Excel",
+      "description": "Abrir o Excel para computador",
+      "url": "excel://start",
+      "category": "app",
+      "icon": "action"
+    },
+    "item-07": {
+      "name": "Outlook",
+      "description": "Abra o Outlook para computador",
+      "url": "outlook://start",
+      "category": "app",
+      "icon": "action"
+    },
+    "item-08": {
+      "name": "WhatsApp",
+      "description": "Converse pelo WhatsApp para Windows",
+      "url": "whatsapp://start",
+      "category": "app",
+      "icon": "action"
+    },
+    "item-09": {
+      "name": "Outlook",
+      "description": "Acessar o Outlook pelo navegador",
+      "url": "https://outlook.cloud.microsoft",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-10": {
+      "name": "MPS Monitor",
+      "description": "Acesse o portal de monitoramento de impressão",
+      "url": "https://portal.mpsmonitor.com",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-11": {
+      "name": "DOK Genius (SPSCOM)",
+      "description": "Acesse o tenant SPSCOM pelo Entra ID da Microsoft",
+      "url": "https://launcher.myapps.microsoft.com/api/signin/d8513bbc-37ee-4017-be49-a0c012b803f5?tenantId=4e332324-d680-4c26-9381-593ce53fa910",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-12": {
+      "name": "DataService Ethernet",
+      "description": "Acesse o DataService pela rede interna",
+      "url": "http://172.16.40.5:8090/newdataservice",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-13": {
+      "name": "DataService Web",
+      "description": "Acesse o DataService pelo endereço externo",
+      "url": "http://177.124.215.90:8090/newdataservice",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-14": {
+      "name": "Planilha de Retirada de Suprimentos",
+      "description": "Consulte os registros de retirada de suprimentos",
+      "url": "https://onedrive.live.com/:x:/g/personal/f7d1198848365e01/IQAf-Qpg5Su2SpQsopXDeODoAbxhXbOEvaK6T7GL8LfV8Ps?rtime=zPaPXJI030g&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3gvYy9mN2QxMTk4ODQ4MzY1ZTAxL0lRQWYtUXBnNVN1MlNwUXNvcFhEZU9Eb0FieGhYYk9FdmFLNlQ3R0w4TGZWOFBzP2U9bWNrY2ZO",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-15": {
+      "name": "Logística de Suprimentos",
+      "description": "Acompanhe a logística de suprimentos",
+      "url": "https://spscomcomercio-my.sharepoint.com/:x:/g/personal/pedro_azevedo_spscom_com_br/IQBL1Ez1MlMCQp8DtJ0IyoIcAT8L411fXfOU7WF96wcKV48?email=pedro.azevedo%40spscom.com.br&e=gfND4b",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-16": {
+      "name": "DOK Genius",
+      "description": "Acesse o ambiente de produção",
+      "url": "https://app.dokgenius.com/",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-17": {
+      "name": "IBM MaaS360",
+      "description": "Acesse o gerenciamento de dispositivos",
+      "url": "https://login.maas360.com",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-18": {
+      "name": "DataLicense",
+      "description": "Acesse o portal DataLicense",
+      "url": "https://databitbh.com:61212",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-19": {
+      "name": "Desk Manager",
+      "description": "Acesse a central de atendimento e chamados",
+      "url": "https://omnibrasil.desk.ms/?LoginTicket",
+      "category": "link",
+      "icon": "link"
+    },
+    "item-20": {
+      "name": "Photopea",
+      "description": "Edite imagens e arquivos de design online",
+      "url": "https://www.photopea.com",
+      "category": "link",
+      "icon": "link"
+    }
+  }
+}
